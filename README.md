@@ -1,4 +1,4 @@
-# SArts Material Price Estimator
+# Shivalingeshwara Arts Material Price Estimator
 
 A small offline-friendly price estimator built with plain HTML, CSS, and JavaScript. No npm, build process, framework, backend, or database is required.
 
