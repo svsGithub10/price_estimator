@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#102c2a" />
-  <title>SArts | Material Price Estimator</title>
+  <title>Shivalingeshwara Arts | Product Price Estimator</title>
   <style>
     :root {
       --ink: #172523;
@@ -195,7 +195,7 @@
     <header class="topbar">
       <div class="brand">
         <div class="brandmark">SA</div>
-        <div><div class="brandname">Shivalingeshwara Arts</div><div class="brandline">Material pricing workspace</div></div>
+        <div><div class="brandname">Shivalingeshwara Arts</div><div class="brandline">Product pricing workspace</div></div>
       </div>
       <div class="top-actions">
         <span class="status">● Saves on this device</span>
@@ -208,7 +208,7 @@
     <section class="hero">
       <div>
         <div class="eyebrow">Simple pricing tool · Offline-ready</div>
-        <h1>Material Price Estimator</h1>
+        <h1>ProductPrice Estimator</h1>
         <p>Build one product from multiple materials, calculate the complete order price, add fixed rupee charges and optionally apply 18% GST. Every material rate can be edited in the app.</p>
       </div>
       <div class="hero-chip"><small>Estimate currency</small><strong>₹ INR <span style="color:var(--lime)">/ product</span></strong></div>
@@ -350,7 +350,7 @@
         </div>
       </section>
     </main>
-    <footer class="bottom-note"><span>SArts Material Price Estimator · No server or account required</span><span>Data stays in this browser · Export a backup before clearing browser data</span></footer>
+    <footer class="bottom-note"><span>Shivalingeshwara Arts ProductPrice Estimator · No server or account required</span><span>Data stays in this browser · Export a backup before clearing browser data</span></footer>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite">Saved</div>
 
@@ -756,7 +756,7 @@
       const file = e.target.files && e.target.files[0]; if (!file) return;
       try {
         const parsed = JSON.parse(await file.text());
-        if (!parsed || !Array.isArray(parsed.materials) || !parsed.settings) throw new Error('Not a SArts backup file');
+        if (!parsed || !Array.isArray(parsed.materials) || !parsed.settings) throw new Error('Not a Shivalingeshwara Arts backup file');
         const map = new Map(parsed.materials.map(m => [m.id, m]));
         state.materials = DEFAULT_MATERIALS.map(def => ({...def, ...(map.get(def.id) || {})}));
         state.settings = {...defaultSettings(), ...parsed.settings};
