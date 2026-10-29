@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#102c2a" />
+  <meta name="theme-color" content="#4338a8" />
   <title>Shivalingeshwara Arts | Product Price Estimator</title>
   <style>
     :root {
-      --ink: #172523;
-      --muted: #6c7b78;
-      --line: #e0e8e5;
-      --paper: #f4f7f5;
+      --ink: #211d38;
+      --muted: #716c86;
+      --line: #e4e1f0;
+      --paper: #f8f7fc;
       --card: #ffffff;
-      --forest: #153d38;
-      --forest-2: #1e554c;
-      --mint: #d9f4e8;
-      --lime: #c2f074;
-      --gold: #e8b963;
+      --forest: #4338a8;
+      --forest-2: #5b50c8;
+      --mint: #eeebff;
+      --lime: #ff8a2a;
+      --gold: #ffb15a;
       --red: #b83d32;
-      --shadow: 0 16px 42px rgba(17, 48, 43, .07);
+      --shadow: 0 16px 42px rgba(57, 44, 132, .08);
       --radius: 20px;
     }
     * { box-sizing: border-box; }
@@ -35,68 +35,78 @@
     .shell { max-width: 1220px; margin: 0 auto; padding: 25px 24px 46px; }
     .topbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 27px; }
     .brand { display: flex; gap: 12px; align-items: center; }
-    .brandmark { width: 43px; height: 43px; border-radius: 14px; display: grid; place-items: center; background: var(--forest); color: var(--lime); font-weight: 900; font-size: 18px; letter-spacing: -1px; box-shadow: 0 7px 18px #153d3824; }
+    .brandmark { width: 43px; height: 43px; border-radius: 14px; display: grid; place-items: center; background: var(--forest); color: var(--lime); font-weight: 900; font-size: 18px; letter-spacing: -1px; box-shadow: 0 7px 18px #4338a824; }
     .brandname { font-weight: 800; font-size: 16px; letter-spacing: -.3px; }
     .brandline { color: var(--muted); font-size: 12px; margin-top: 1px; }
     .top-actions { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
-    .status { color: var(--forest-2); background: #e2f5ec; border: 1px solid #c8eadd; border-radius: 99px; padding: 7px 11px; font-size: 12px; font-weight: 700; }
+    .status { color: #4435a0; background: #eeebff; border: 1px solid #d8d3ff; border-radius: 99px; padding: 7px 11px; font-size: 12px; font-weight: 700; }
     .btn { border: 1px solid var(--line); background: white; padding: 9px 13px; border-radius: 11px; color: var(--ink); font-weight: 700; transition: .18s ease; }
-    .btn:hover { transform: translateY(-1px); border-color: #b8cbc5; }
+    .btn:hover { transform: translateY(-1px); border-color: #c9c4ec; }
     .btn.primary { background: var(--forest); border-color: var(--forest); color: white; }
     .btn.primary:hover { background: var(--forest-2); }
-    .btn.subtle { background: #edf2ef; }
+    .btn.subtle { background: #f0eef9; }
     .hero { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
-    .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #347568; margin-bottom: 7px; }
+    .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #5b50c8; margin-bottom: 7px; }
     h1 { font-size: clamp(28px, 4vw, 42px); line-height: 1.08; letter-spacing: -1.5px; margin: 0; }
     .hero p { margin: 11px 0 0; max-width: 650px; color: var(--muted); font-size: 14px; }
     .hero-chip { min-width: 175px; background: var(--forest); color: white; border-radius: 17px; padding: 15px 18px; box-shadow: var(--shadow); }
-    .hero-chip small { color: #b9d7cd; display: block; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+    .hero-chip small { color: #e2deff; display: block; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
     .hero-chip strong { display: block; margin-top: 3px; font-size: 22px; letter-spacing: -.5px; }
-    .tabs { display: flex; gap: 7px; background: #e9efec; border-radius: 14px; padding: 5px; width: fit-content; margin-bottom: 18px; }
-    .tab { border: 0; background: transparent; color: #63736f; padding: 10px 16px; border-radius: 10px; font-weight: 800; }
-    .tab.active { color: var(--forest); background: white; box-shadow: 0 3px 8px #163c3510; }
+    .tabs { display: flex; gap: 7px; background: #f0eef9; border-radius: 14px; padding: 5px; width: fit-content; margin-bottom: 18px; }
+    .tab { border: 0; background: transparent; color: #77728b; padding: 10px 16px; border-radius: 10px; font-weight: 800; }
+    .tab.active { color: var(--forest); background: white; box-shadow: 0 3px 8px #4338a810; }
     .workspace { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(330px, .8fr); gap: 18px; align-items: start; }
-    .card { background: var(--card); border: 1px solid #e7eeeb; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .card { background: var(--card); border: 1px solid #e8e5f2; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
     .card-head { padding: 22px 23px 0; display: flex; align-items: start; justify-content: space-between; gap: 15px; }
     .card-head h2 { font-size: 18px; letter-spacing: -.4px; margin: 0; }
     .card-head p { color: var(--muted); margin: 5px 0 0; font-size: 12px; }
     .card-body { padding: 21px 23px 23px; }
-    .section-label { text-transform: uppercase; font-size: 10px; letter-spacing: 1.2px; color: #72827d; font-weight: 900; margin: 0 0 12px; }
+    .section-label { text-transform: uppercase; font-size: 10px; letter-spacing: 1.2px; color: #77728b; font-weight: 900; margin: 0 0 12px; }
     .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
     .field-grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
     .field { min-width: 0; }
-    label { display: block; font-size: 12px; color: #43534f; font-weight: 800; margin-bottom: 7px; }
+    label { display: block; font-size: 12px; color: #514b65; font-weight: 800; margin-bottom: 7px; }
     .field small, .hint { font-size: 11px; color: var(--muted); display: block; margin-top: 5px; }
-    input, select { width: 100%; border: 1px solid #dce5e1; background: #fbfcfb; border-radius: 10px; padding: 11px 12px; outline: none; color: var(--ink); min-height: 43px; }
-    input:focus, select:focus { border-color: #6ba89a; box-shadow: 0 0 0 3px #d9f4e8; background: white; }
+    input, select { width: 100%; border: 1px solid #e4e1f0; background: #fdfcff; border-radius: 10px; padding: 11px 12px; outline: none; color: var(--ink); min-height: 43px; }
+    input:focus, select:focus { border-color: #8e84e8; box-shadow: 0 0 0 3px #eeebff; background: white; }
     input[type=number] { font-variant-numeric: tabular-nums; }
     .component-tools { display:flex; align-items:center; justify-content:space-between; gap:12px; margin: 4px 0 12px; flex-wrap:wrap; }
     .component-tools strong { font-size:13px; }
     .component-list { display:grid; gap:12px; }
-    .component-row { border:1px solid var(--line); background:#fcfdfc; border-radius:14px; padding:14px; }
+    .component-row { border:1px solid var(--line); background:#fdfcff; border-radius:14px; padding:14px; }
     .component-row-head { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
     .component-row-head strong { font-size:12px; }
+    .component-header-actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .dimension-unit-control { display:flex; align-items:center; gap:6px; margin:0; color:var(--muted); font-size:10px; white-space:nowrap; }
+    .dimension-unit-control select { width:auto; min-height:32px; padding:5px 8px; font-size:11px; background:#fff; }
     .remove-component { border:0; background:#fae9e6; color:#9a332b; border-radius:8px; padding:6px 9px; font-size:11px; font-weight:800; }
     .component-grid { display:grid; grid-template-columns:minmax(180px, 2fr) repeat(4, minmax(90px, 1fr)); gap:10px; align-items:end; }
     .component-grid label { font-size:11px; }
     .component-grid input, .component-grid select { min-height:39px; padding:9px; }
-    .component-summary { color:var(--forest-2); background:#eff7f2; border-radius:9px; padding:8px 10px; margin-top:10px; font-size:11px; font-weight:800; }
+    .component-summary { color:var(--forest-2); background:#f0eeff; border-radius:9px; padding:8px 10px; margin-top:10px; font-size:11px; font-weight:800; }
+    .component-laser-head { display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:14px; padding-top:12px; border-top:1px solid var(--line); }
+    .component-laser-head strong { color:var(--forest); font-size:11px; text-transform:uppercase; letter-spacing:.8px; }
+    .component-laser-head span { color:var(--muted); font-size:10px; }
+    .component-machine-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px; margin-top:9px; }
+    .component-machine-grid label { font-size:11px; }
+    .component-machine-grid input, .component-machine-grid select { min-height:39px; padding:9px; }
+    .component-laser-summary { color:#a64e0c; background:#fff1e5; border:1px solid #ffe0c4; border-radius:9px; padding:8px 10px; margin-top:8px; font-size:11px; font-weight:800; }
     .gst-field { max-width:260px; margin-top:14px; }
-    .subtotal-hint { color:#d2e4dd; font-size:11px; margin-top:9px; }
+    .subtotal-hint { color:#e1ddfb; font-size:11px; margin-top:9px; }
     .divider { height: 1px; background: var(--line); margin: 21px 0; }
     .inline-price { display: flex; align-items: center; gap: 9px; }
     .inline-price input { font-weight: 800; font-size: 16px; }
     .currency { font-size: 12px; font-weight: 800; color: var(--muted); margin-left: -2px; }
-    .charge-note { background: #f4f8f6; border: 1px solid #e1ebe6; color: #62736e; font-size: 11px; padding: 10px 12px; border-radius: 10px; margin-top: 13px; }
-    .calc-card { background: var(--forest); color: white; border-radius: var(--radius); padding: 23px; box-shadow: 0 16px 36px #153d3826; }
+    .charge-note { background: #f5f3fc; border: 1px solid #e4e0f2; color: #625d78; font-size: 11px; padding: 10px 12px; border-radius: 10px; margin-top: 13px; }
+    .calc-card { background: var(--forest); color: white; border-radius: var(--radius); padding: 23px; box-shadow: 0 16px 36px #4338a826; }
     .calc-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
     .calc-top h2 { margin: 0; font-size: 17px; letter-spacing: -.3px; }
-    .calc-tag { background: #2e655b; color: #d8f0e6; font-weight: 800; font-size: 10px; border-radius: 30px; padding: 6px 9px; text-transform: uppercase; letter-spacing: .7px; }
-    .grand-label { margin-top: 26px; color: #b7d2c9; font-size: 12px; font-weight: 800; }
+    .calc-tag { background: #ff8a2a; color: #302552; font-weight: 800; font-size: 10px; border-radius: 30px; padding: 6px 9px; text-transform: uppercase; letter-spacing: .7px; }
+    .grand-label { margin-top: 26px; color: #e2deff; font-size: 12px; font-weight: 800; }
     .grand-total { font-size: clamp(34px, 4vw, 45px); line-height: 1.1; font-weight: 850; letter-spacing: -1.5px; margin: 4px 0 5px; font-variant-numeric: tabular-nums; }
-    .unit-price { color: #c0d9d0; font-size: 12px; }
+    .unit-price { color: #e4e0ff; font-size: 12px; }
     .calc-divider { height: 1px; background: #ffffff20; margin: 22px 0 16px; }
-    .cost-line { display: flex; align-items: start; justify-content: space-between; gap: 16px; margin: 12px 0; font-size: 12px; color: #c3d8d1; }
+    .cost-line { display: flex; align-items: start; justify-content: space-between; gap: 16px; margin: 12px 0; font-size: 12px; color: #e1ddfb; }
     .cost-line span:last-child { color: white; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .cost-line.main { color: white; font-size: 13px; }
     .cost-line.total { border-top: 1px solid #ffffff27; padding-top: 15px; margin-top: 16px; color: white; font-size: 14px; font-weight: 900; }
@@ -104,29 +114,29 @@
     .calc-actions .btn { flex: 1; }
     .calc-actions .btn.primary { background: var(--lime); color: var(--forest); border-color: var(--lime); }
     .calc-actions .btn.outline { color: white; background: transparent; border-color: #ffffff44; }
-    .formula { color: #c3d8d1; font-size: 11px; margin-top: 15px; }
-    .notice { padding: 12px 14px; margin-top: 17px; color: #5b6e67; background: #eaf2ee; border: 1px solid #d8e6df; border-radius: 12px; font-size: 11px; }
+    .formula { color: #e1ddfb; font-size: 11px; margin-top: 15px; }
+    .notice { padding: 12px 14px; margin-top: 17px; color: #625d78; background: #f0edff; border: 1px solid #ded9fa; border-radius: 12px; font-size: 11px; }
     .settings-panel { display: none; }
     .settings-panel.visible { display: block; }
     .estimate-panel.hidden { display: none; }
     .settings-layout { display: grid; grid-template-columns: minmax(410px, .85fr) minmax(0, 1.15fr); gap: 18px; align-items: start; }
-    .settings-box { background: white; border: 1px solid #e7eeeb; border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; }
+    .settings-box { background: white; border: 1px solid #e8e5f2; border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; }
     .settings-box h2 { font-size: 17px; margin: 0; letter-spacing: -.3px; }
     .settings-box > p { margin: 6px 0 17px; font-size: 12px; color: var(--muted); }
     .setting-field { margin-bottom: 13px; }
     .setting-field:last-child { margin-bottom: 0; }
-    .metric { background: #eff7f2; border-radius: 12px; padding: 13px; margin-top: 15px; }
-    .metric small { color: #5e746c; font-size: 11px; display: block; }
+    .metric { background: #f0eeff; border-radius: 12px; padding: 13px; margin-top: 15px; }
+    .metric small { color: #625d78; font-size: 11px; display: block; }
     .metric strong { color: var(--forest); font-size: 21px; letter-spacing: -.5px; display: block; margin-top: 2px; }
-    .metric p { font-size: 10px; color: #6a7d75; margin: 5px 0 0; }
+    .metric p { font-size: 10px; color: #7a7590; margin: 5px 0 0; }
     .settings-head { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 13px; }
     .settings-head h2 { font-size: 18px; margin: 0; }
     .settings-head p { color: var(--muted); font-size: 12px; margin: 4px 0 0; }
     .search { max-width: 260px; }
     .table-wrap { overflow: auto; max-height: 750px; border: 1px solid var(--line); border-radius: 13px; }
     table { width: 100%; border-collapse: collapse; min-width: 620px; font-size: 12px; }
-    th { position: sticky; top: 0; z-index: 1; text-align: left; color: #52645d; background: #f2f6f4; font-size: 10px; text-transform: uppercase; letter-spacing: .7px; padding: 12px 13px; border-bottom: 1px solid var(--line); }
-    td { padding: 10px 13px; border-bottom: 1px solid #edf1ef; vertical-align: middle; }
+    th { position: sticky; top: 0; z-index: 1; text-align: left; color: #5d5872; background: #f1eff9; font-size: 10px; text-transform: uppercase; letter-spacing: .7px; padding: 12px 13px; border-bottom: 1px solid var(--line); }
+    td { padding: 10px 13px; border-bottom: 1px solid #efedf6; vertical-align: middle; }
     tr:last-child td { border-bottom: 0; }
     td:first-child { font-weight: 800; min-width: 205px; }
     .rate-input { max-width: 105px; min-height: 36px; padding: 7px 9px; background: white; }
@@ -135,17 +145,17 @@
     .power-rate-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; margin: 12px 0 15px; }
     .power-rate-note { font-size: 10px; color: var(--muted); margin-top: 7px; }
     .type-pill { display: inline-block; border-radius: 30px; padding: 4px 7px; font-size: 10px; font-weight: 800; white-space: nowrap; }
-    .type-pill.listed { color: #236b4c; background: #ddf5e7; }
-    .type-pill.estimated { color: #825a19; background: #fff0d0; }
-    .source-link { color: #266f61; font-weight: 800; text-decoration: none; white-space: nowrap; }
+    .type-pill.listed { color: #4435a0; background: #eeebff; }
+    .type-pill.estimated { color: #a34d0b; background: #fff0e4; }
+    .source-link { color: #5146b8; font-weight: 800; text-decoration: none; white-space: nowrap; }
     .source-link:hover { text-decoration: underline; }
-    .group-row td { background: #f8faf9; color: #58736a; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; padding-top: 13px; padding-bottom: 9px; }
-    details { margin-top: 17px; border: 1px solid var(--line); background: #fbfcfb; border-radius: 12px; padding: 12px 14px; }
+    .group-row td { background: #f8f7fc; color: #625d78; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; padding-top: 13px; padding-bottom: 9px; }
+    details { margin-top: 17px; border: 1px solid var(--line); background: #fdfcff; border-radius: 12px; padding: 12px 14px; }
     summary { cursor: pointer; font-weight: 800; font-size: 12px; }
     details p, details li { color: var(--muted); font-size: 11px; }
     details ul { padding-left: 18px; }
-    .bottom-note { color: #8a9893; font-size: 11px; margin-top: 24px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 18px); opacity: 0; pointer-events: none; background: #112f2b; color: white; padding: 12px 18px; border-radius: 12px; font-size: 12px; font-weight: 800; box-shadow: var(--shadow); transition: .25s ease; z-index: 20; }
+    .bottom-note { color: #8a859b; font-size: 11px; margin-top: 24px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 18px); opacity: 0; pointer-events: none; background: #342b78; color: white; padding: 12px 18px; border-radius: 12px; font-size: 12px; font-weight: 800; box-shadow: var(--shadow); transition: .25s ease; z-index: 20; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
     .file-input { display: none; }
     .muted-mini { font-size: 10px; color: var(--muted); }
@@ -169,6 +179,8 @@
       .field-grid, .field-grid.three { grid-template-columns: 1fr 1fr; }
       .component-grid { grid-template-columns: 1fr 1fr; }
       .component-grid .component-material-field { grid-column: 1 / -1; }
+      .component-row-head { align-items:flex-start; flex-wrap:wrap; }
+      .component-header-actions { margin-left:auto; }
       .settings-config { display: block; }
       .calc-card { padding: 20px; }
       .search { max-width: 100%; width: 100%; }
@@ -235,14 +247,7 @@
               </div>
               <div class="component-tools"><strong>Materials used in one product</strong><button class="btn primary" type="button" id="addComponentBtn">+ Add material</button></div>
               <div id="componentRows" class="component-list"></div>
-              <div class="notice" style="margin-top:13px">For each component, enter the size of one material piece and how many pieces are used in one product. The app multiplies material usage by the number of products. Material rates are editable here or in price settings.</div>
-              <div class="divider"></div>
-              <div class="section-label">Laser power & machine time</div>
-              <div class="field-grid">
-                <div class="field"><label for="laserPower">Laser power setting</label><select id="laserPower" aria-label="Laser power percentage"><option value="75" selected>75% power — ₹0.20/min</option></select><small id="laserPowerHint">Estimated consumption and electricity rate for the selected power.</small></div>
-                <div class="field"><label for="machineMinutes">Machine time for entire order (min)</label><input id="machineMinutes" type="number" min="0" step="1" value="0" /><small>Enter the total time for all products at this selected power setting.</small></div>
-              </div>
-              <div class="charge-note">If the job uses several power settings, enter the machine time at the main/average setting for a simple estimate. Electricity uses the editable ₹/minute rate in settings, not tube wattage × power percentage.</div>
+              <div class="notice" style="margin-top:13px">For each material component, enter its dimensions and pieces per product, then set its own laser power and total machine time for the entire order. Leave machine time at 0 for materials that are not cut or engraved by the laser. Electricity is calculated separately for each material using the editable power rates in settings.</div>
               <div class="divider"></div>
               <div class="section-label">Additional fixed charges</div>
               <div class="field-grid three">
@@ -266,12 +271,12 @@
               <div class="cost-line"><span>Design</span><span id="designCost">₹0.00</span></div>
               <div class="cost-line"><span>Labour / making</span><span id="labourCost">₹0.00</span></div>
               <div class="cost-line"><span>Maintenance / wastage</span><span id="wastageCost">₹0.00</span></div>
-              <div class="cost-line"><span>Laser electricity</span><span id="machineCost">₹0.00</span></div>
+              <div class="cost-line"><span>Machine work cost</span><span id="machineCost">₹0.00</span></div>
               <div class="cost-line"><span>Subtotal before GST</span><span id="subtotalCost">₹0.00</span></div>
               <div class="cost-line"><span id="gstSummaryLabel">GST (0%)</span><span id="gstCost">₹0.00</span></div>
               <div class="cost-line total"><span>Final estimate (including GST)</span><span id="finalTotal">₹0.00</span></div>
               <div class="subtotal-hint" id="productSummary"></div>
-              <div class="formula" id="machineFormula">Laser electricity uses the selected power setting and editable cost per minute.</div>
+              <div class="formula" id="machineFormula">Machine work cost is calculated from each material’s machine time and selected laser power.</div>
               <div class="calc-actions"><button class="btn primary" type="button" id="printBtn">Print / Save PDF</button><button class="btn outline" type="button" id="clearBtn">Reset form</button></div>
             </section>
             <div class="notice"><strong>Important:</strong> online prices below are starter references, not confirmed quotes from your supplier in Haveri. Sheet grade, density, colour, size, GST and transport can change the real cost.</div>
@@ -298,7 +303,7 @@
                 <tbody id="laserPowerRatesBody"></tbody>
               </table>
             </div>
-            <div class="power-rate-note">The rounded cost/min is used for each quote. The hourly value is kept as provided in your reference table, so it may not equal cost/min × 60 exactly. Edit every value here; changes save automatically.</div>
+            <div class="power-rate-note">Cost/min uses three decimals, while the hourly reference is kept exactly as supplied. Because the hourly values are rounded reference values, cost/min × 60 may not match them exactly. Changes save automatically.</div>
             <div class="metric"><small>Estimated laser electricity / month at 100% power</small><strong id="monthlyLaserCost">₹272.00</strong><p id="monthlyPowerExplain">100% power hourly reference × monthly runtime. Estimate only.</p></div>
             <div class="metric"><small>Difference against total bill benchmark</small><strong id="otherPowerCost">₹728.00</strong><p>Remaining bill estimate after subtracting the 100% power benchmark. Not allocated into estimates automatically.</p></div>
             <div class="notice">Job laser electricity is calculated as machine minutes × the selected power setting's cost/min. The supplied table is an estimate, not a power-meter measurement. It does not include CO₂ tube wear/replacement, depreciation, repairs, or chiller/pump wear. Monthly comparison assumes all entered machine hours run at 100% power.</div>
@@ -358,13 +363,13 @@
     const STORAGE_KEY = 'sarts-material-estimator-v2';
     const LEGACY_STORAGE_KEY = 'sarts-material-estimator-v1';
     const DEFAULT_LASER_POWER_RATES = [
-      { power: 10, unitsPerHour: 1.24, costPerMin: 0.14, costPerHour: 8.40 },
-      { power: 20, unitsPerHour: 1.32, costPerMin: 0.15, costPerHour: 8.98 },
-      { power: 40, unitsPerHour: 1.49, costPerMin: 0.17, costPerHour: 10.13 },
-      { power: 60, unitsPerHour: 1.66, costPerMin: 0.19, costPerHour: 11.29 },
-      { power: 75, unitsPerHour: 1.79, costPerMin: 0.20, costPerHour: 12.16 },
-      { power: 85, unitsPerHour: 1.87, costPerMin: 0.21, costPerHour: 12.73 },
-      { power: 100, unitsPerHour: 2.00, costPerMin: 0.23, costPerHour: 13.60 }
+      { power: 10, unitsPerHour: 1.24, costPerMin: 0.280, costPerHour: 16.80 },
+      { power: 20, unitsPerHour: 1.32, costPerMin: 0.300, costPerHour: 17.96 },
+      { power: 40, unitsPerHour: 1.49, costPerMin: 0.338, costPerHour: 20.26 },
+      { power: 60, unitsPerHour: 1.66, costPerMin: 0.376, costPerHour: 22.58 },
+      { power: 75, unitsPerHour: 1.79, costPerMin: 0.406, costPerHour: 24.32 },
+      { power: 85, unitsPerHour: 1.87, costPerMin: 0.424, costPerHour: 25.46 },
+      { power: 100, unitsPerHour: 2.00, costPerMin: 0.454, costPerHour: 27.20 }
     ];
     const DEFAULT_SETTINGS = {
       laserPowerRates: DEFAULT_LASER_POWER_RATES,
@@ -372,7 +377,8 @@
       monthlyBill: 1000,
       defaultDesignCharge: 0,
       defaultLabourCharge: 0,
-      defaultWastageCharge: 0
+      defaultWastageCharge: 0,
+      laserRateScaleVersion: 2
     };
     function defaultSettings() {
       return { ...DEFAULT_SETTINGS, laserPowerRates: clone(DEFAULT_LASER_POWER_RATES) };
@@ -386,6 +392,14 @@
         merged.costPerHour = Math.max(0, Number(merged.costPerHour) || 0);
         return merged;
       });
+    }
+
+    function doubleLegacyLaserRates(rates) {
+      return rates.map(rate => ({
+        ...rate,
+        costPerMin: Math.max(0, Number(rate.costPerMin) || 0) * 2,
+        costPerHour: Math.max(0, Number(rate.costPerHour) || 0) * 2
+      }));
     }
 
     const DEFAULT_MATERIALS = [
@@ -458,8 +472,15 @@
         if (saved && Array.isArray(saved.materials) && saved.settings) {
           const savedMap = new Map(saved.materials.map(m => [m.id, m]));
           const materials = DEFAULT_MATERIALS.map(def => ({ ...def, ...(savedMap.get(def.id) || {}), id:def.id, group:def.group, name:def.name, basis:def.basis, source:def.source, url:def.url, note:def.note }));
-          const settings = { ...defaultSettings(), ...saved.settings };
-          settings.laserPowerRates = normalizeLaserPowerRates(saved.settings.laserPowerRates);
+          const savedSettings = saved.settings;
+          let savedRates = Array.isArray(savedSettings.laserPowerRates)
+            ? clone(savedSettings.laserPowerRates)
+            : clone(DEFAULT_LASER_POWER_RATES);
+          if (Array.isArray(savedSettings.laserPowerRates) && Number(savedSettings.laserRateScaleVersion || 0) < 2) {
+            savedRates = doubleLegacyLaserRates(savedRates);
+          }
+          const settings = { ...defaultSettings(), ...savedSettings, laserRateScaleVersion: 2 };
+          settings.laserPowerRates = normalizeLaserPowerRates(savedRates);
           return { materials, settings };
         }
       } catch (e) { /* try the prior version below */ }
@@ -505,15 +526,27 @@
       const row = document.createElement('div');
       row.className = 'component-row'; row.dataset.componentId = id;
       row.innerHTML = `
-        <div class="component-row-head"><strong>Material component <span class="component-number">${document.querySelectorAll('.component-row').length + 1}</span></strong><button class="remove-component" type="button" data-remove-component="${id}">Remove</button></div>
+        <div class="component-row-head">
+          <strong>Material component <span class="component-number">${document.querySelectorAll('.component-row').length + 1}</span></strong>
+          <div class="component-header-actions">
+            <label class="dimension-unit-control"><span>Dimensions</span><select data-dimension-unit aria-label="Dimension unit"><option value="in" selected>Inches (in)</option><option value="ft">Feet (ft)</option></select></label>
+            <button class="remove-component" type="button" data-remove-component="${id}">Remove</button>
+          </div>
+        </div>
         <div class="component-grid">
           <div class="field component-material-field"><label>Material / variant</label><select data-component-material>${materialOptionsHtml(materialId)}</select></div>
           <div class="field"><label>Rate (₹/sq.ft)</label><input data-component-rate type="number" min="0" step="0.01" value="${Number(state.materials.find(m => m.id === materialId)?.rate || 0)}" /></div>
-          <div class="field"><label>Width (ft)</label><input data-component-width type="number" min="0" step="0.01" value="${width}" /></div>
-          <div class="field"><label>Height (ft)</label><input data-component-height type="number" min="0" step="0.01" value="${height}" /></div>
+          <div class="field"><label data-width-label>Width (in)</label><input data-component-width type="number" min="0" step="0.1" value="${Number(width) * 12}" /></div>
+          <div class="field"><label data-height-label>Height (in)</label><input data-component-height type="number" min="0" step="0.1" value="${Number(height) * 12}" /></div>
           <div class="field"><label>Pieces / product</label><input data-component-pieces type="number" min="0" step="1" value="${pieces}" /></div>
         </div>
-        <div class="component-summary" data-component-summary>1.00 sq.ft per piece · ₹0.00 per product · ₹0.00 for order</div>`;
+        <div class="component-laser-head"><strong>Laser power & machine time</strong><span>For this material · entire order</span></div>
+        <div class="component-machine-grid">
+          <div class="field"><label>Laser power setting</label><select data-component-power aria-label="Laser power for this material">${laserPowerOptionsHtml(75)}</select><small>Power used when processing this material.</small></div>
+          <div class="field"><label>Machine time (min/order)</label><input data-component-minutes type="number" min="0" step="0.1" value="0" /><small>Total minutes for this material across all products.</small></div>
+        </div>
+        <div class="component-summary" data-component-summary>1.00 sq.ft per piece · ₹0.00 per product · ₹0.00 for order</div>
+        <div class="component-laser-summary" data-component-laser-summary>Machine work: 75% · 0 min/order · ₹0.00</div>`;
       $('componentRows').appendChild(row);
       row.querySelector('[data-remove-component]').addEventListener('click', () => {
         if (document.querySelectorAll('.component-row').length <= 1) { toast('Keep at least one material component'); return; }
@@ -535,7 +568,28 @@
         }
         calculate();
       });
-      row.querySelectorAll('[data-component-width], [data-component-height], [data-component-pieces]').forEach(input => input.addEventListener('input', calculate));
+      row.querySelectorAll('[data-component-width], [data-component-height], [data-component-pieces], [data-component-minutes]').forEach(input => input.addEventListener('input', calculate));
+      const unitSelect = row.querySelector('[data-dimension-unit]');
+      row.dataset.dimensionUnit = 'in';
+      unitSelect.addEventListener('change', () => {
+        const previousUnit = row.dataset.dimensionUnit || 'in';
+        const nextUnit = unitSelect.value;
+        if (previousUnit !== nextUnit) {
+          const conversion = previousUnit === 'in' ? (1 / 12) : 12;
+          [['[data-component-width]', '[data-width-label]', 'Width'], ['[data-component-height]', '[data-height-label]', 'Height']].forEach(([inputSelector, labelSelector, name]) => {
+            const input = row.querySelector(inputSelector);
+            if (input.value !== '') {
+              const converted = (Number(input.value) || 0) * conversion;
+              input.value = String(Number(converted.toFixed(nextUnit === 'in' ? 2 : 4)));
+            }
+            input.step = nextUnit === 'in' ? '0.1' : '0.001';
+            row.querySelector(labelSelector).textContent = `${name} (${nextUnit})`;
+          });
+          row.dataset.dimensionUnit = nextUnit;
+        }
+        calculate();
+      });
+      row.querySelector('[data-component-power]').addEventListener('change', calculate);
       calculate();
     }
     function renumberComponents() {
@@ -554,14 +608,20 @@
       });
     }
 
-    function renderLaserPowerOptions() {
-      const select = $('laserPower');
-      if (!select) return;
-      const current = Number(select.value) || 75;
-      select.innerHTML = state.settings.laserPowerRates.map(rate =>
-        `<option value="${rate.power}" ${rate.power === current ? 'selected' : ''}>${rate.power}% power — ${money(rate.costPerMin)}/min</option>`
+    function laserPowerOptionsHtml(selectedPower = 75) {
+      const rates = state.settings.laserPowerRates || [];
+      const requested = Number(selectedPower) || 75;
+      const fallback = rates.find(rate => rate.power === 75) || rates[0];
+      const current = rates.some(rate => rate.power === requested) ? requested : fallback?.power;
+      return rates.map(rate =>
+        `<option value="${rate.power}" ${rate.power === current ? 'selected' : ''}>${rate.power}% · ₹${rate.costPerMin.toFixed(3)}/min</option>`
       ).join('');
-      if (!state.settings.laserPowerRates.some(rate => rate.power === current)) select.value = '75';
+    }
+    function refreshComponentPowerOptions() {
+      document.querySelectorAll('[data-component-power]').forEach(select => {
+        const current = Number(select.value) || 75;
+        select.innerHTML = laserPowerOptionsHtml(current);
+      });
     }
 
     function renderLaserPowerRates() {
@@ -573,7 +633,7 @@
         tr.innerHTML = `
           <td><strong>${rate.power}%</strong></td>
           <td><input class="rate-input" type="number" min="0" step="0.01" value="${rate.unitsPerHour}" data-power="${rate.power}" data-power-field="unitsPerHour" aria-label="${rate.power}% power units per hour" /></td>
-          <td><input class="rate-input" type="number" min="0" step="0.01" value="${rate.costPerMin.toFixed(2)}" data-power="${rate.power}" data-power-field="costPerMin" aria-label="${rate.power}% power cost per minute" /></td>
+          <td><input class="rate-input" type="number" min="0" step="0.001" value="${rate.costPerMin.toFixed(3)}" data-power="${rate.power}" data-power-field="costPerMin" aria-label="${rate.power}% power cost per minute" /></td>
           <td><input class="rate-input" type="number" min="0" step="0.01" value="${rate.costPerHour.toFixed(2)}" data-power="${rate.power}" data-power-field="costPerHour" aria-label="${rate.power}% power cost per hour" /></td>`;
         tbody.appendChild(tr);
       });
@@ -584,7 +644,7 @@
         if (!row) return;
         row[field] = Math.max(0, Number(input.value) || 0);
         saveState();
-        renderLaserPowerOptions();
+        refreshComponentPowerOptions();
         calculate();
       }));
     }
@@ -628,17 +688,29 @@
       const design = number('designCharge');
       const labour = number('labourCharge');
       const wastage = number('wastageCharge');
-      const mins = number('machineMinutes');
       const gstRate = Math.max(0, Number($('gstRate').value) || 0);
       let material = 0;
       let totalMaterialArea = 0;
-      document.querySelectorAll('.component-row').forEach((row, index) => {
+      let machine = 0;
+      const machineBreakdown = [];
+
+      document.querySelectorAll('.component-row').forEach(row => {
         const materialId = row.querySelector('[data-component-material]').value;
         const item = state.materials.find(m => m.id === materialId);
         const rate = Math.max(0, Number(row.querySelector('[data-component-rate]').value) || 0);
-        const width = Math.max(0, Number(row.querySelector('[data-component-width]').value) || 0);
-        const height = Math.max(0, Number(row.querySelector('[data-component-height]').value) || 0);
+        const dimensionUnit = row.querySelector('[data-dimension-unit]').value || 'in';
+        const dimensionToFeet = dimensionUnit === 'in' ? (1 / 12) : 1;
+        const width = Math.max(0, Number(row.querySelector('[data-component-width]').value) || 0) * dimensionToFeet;
+        const height = Math.max(0, Number(row.querySelector('[data-component-height]').value) || 0) * dimensionToFeet;
         const piecesPerProduct = Math.max(0, Math.floor(Number(row.querySelector('[data-component-pieces]').value) || 0));
+        const selectedPower = Number(row.querySelector('[data-component-power]').value) || 75;
+        const minutes = Math.max(0, Number(row.querySelector('[data-component-minutes]').value) || 0);
+        const powerRate = state.settings.laserPowerRates.find(rate => rate.power === selectedPower)
+          || state.settings.laserPowerRates.find(rate => rate.power === 75)
+          || state.settings.laserPowerRates[0];
+        const costPerMinute = powerRate ? powerRate.costPerMin : 0;
+        const componentMachineCost = minutes * costPerMinute;
+
         const areaEachPiece = width * height;
         const areaPerProduct = areaEachPiece * piecesPerProduct;
         const areaForOrder = areaPerProduct * productQty;
@@ -646,13 +718,16 @@
         const componentOrderCost = areaForOrder * rate;
         material += componentOrderCost;
         totalMaterialArea += areaForOrder;
+        machine += componentMachineCost;
+
         const name = item ? item.name : 'Material';
+        const minutesLabel = Number.isInteger(minutes) ? String(minutes) : minutes.toFixed(1);
         row.querySelector('[data-component-summary]').textContent = `${areaEachPiece.toFixed(2)} sq.ft per piece · ${piecesPerProduct} piece(s)/product · ${money(componentPerProductCost)} per product · ${money(componentOrderCost)} for order`;
+        row.querySelector('[data-component-laser-summary]').textContent = `Machine work: ${selectedPower}% · ${minutesLabel} min/order × ₹${costPerMinute.toFixed(3)}/min = ${money(componentMachineCost)}`;
         row.setAttribute('aria-label', name);
+        if (minutes > 0) machineBreakdown.push(`${name}: ${minutesLabel} min at ${selectedPower}% = ${money(componentMachineCost)}`);
       });
-      const selectedPower = Number($('laserPower').value) || 75;
-      const powerRate = state.settings.laserPowerRates.find(rate => rate.power === selectedPower) || state.settings.laserPowerRates.find(rate => rate.power === 75) || state.settings.laserPowerRates[0];
-      const machine = mins * (powerRate ? powerRate.costPerMin : 0);
+
       const subtotal = material + design + labour + wastage + machine;
       const gst = subtotal * gstRate / 100;
       const total = subtotal + gst;
@@ -669,8 +744,9 @@
       $('unitPrice').textContent = `${money(total / productQty)} per product · ${money(subtotal / productQty)} before GST`;
       const productName = $('productName').value.trim() || 'Product';
       $('productSummary').textContent = `${productName}: ${productQty} product(s) · ${totalMaterialArea.toFixed(2)} sq.ft total material area · ${money(total / productQty)} estimated price per product`;
-      $('laserPowerHint').textContent = powerRate ? `Estimated ${powerRate.unitsPerHour.toFixed(2)} units/hour · ${money(powerRate.costPerMin)}/min · ${money(powerRate.costPerHour)}/hour reference.` : 'Set the power cost in Edit prices & settings.';
-      $('machineFormula').textContent = powerRate ? `Laser electricity: ${mins} min × ${money(powerRate.costPerMin)}/min at ${selectedPower}% power = ${money(machine)} for this order (${powerRate.unitsPerHour.toFixed(2)} estimated units/hour).` : `Laser electricity: ${money(machine)} for this order.`;
+      $('machineFormula').textContent = machineBreakdown.length
+        ? `Machine work cost by material: ${machineBreakdown.join(' · ')}. Time is entered per material for the entire order.`
+        : 'Machine work cost is ₹0.00 because no machine time has been entered. Add time for each material processed by the laser.';
       state.settings.defaultDesignCharge = design;
       state.settings.defaultLabourCharge = labour;
       state.settings.defaultWastageCharge = wastage;
@@ -720,15 +796,14 @@
     }
 
     $('addComponentBtn').addEventListener('click', () => addComponent());
-    ['productName','productQuantity','machineMinutes','designCharge','labourCharge','wastageCharge'].forEach(id => $(id).addEventListener('input', calculate));
-    $('laserPower').addEventListener('change', calculate);
+    ['productName','productQuantity','designCharge','labourCharge','wastageCharge'].forEach(id => $(id).addEventListener('input', calculate));
     $('gstRate').addEventListener('change', calculate);
     $('estimateTab').addEventListener('click', () => setActiveTab('estimate'));
     $('settingsTab').addEventListener('click', () => setActiveTab('settings'));
     $('priceSearch').addEventListener('input', renderPriceTable);
     $('printBtn').addEventListener('click', () => window.print());
     $('clearBtn').addEventListener('click', () => {
-      $('productName').value = ''; $('productQuantity').value = 1; $('machineMinutes').value = 0;
+      $('productName').value = ''; $('productQuantity').value = 1;
       $('designCharge').value = state.settings.defaultDesignCharge; $('labourCharge').value = state.settings.defaultLabourCharge; $('wastageCharge').value = state.settings.defaultWastageCharge;
       $('gstRate').value = '0'; $('componentRows').innerHTML = ''; componentCounter = 0; addComponent();
       calculate(); toast('Estimate form reset');
@@ -743,7 +818,7 @@
     $('resetDefaultsBtn').addEventListener('click', () => {
       if (!confirm('Restore all starter material rates and machine settings? Your edited prices will be replaced.')) return;
       state = { materials: clone(DEFAULT_MATERIALS), settings: defaultSettings() };
-      saveState(); refreshComponentOptions(); writeSettingsInputs(); renderLaserPowerOptions(); renderLaserPowerRates(); renderPriceTable(); calculate(); toast('Starter values restored');
+      saveState(); refreshComponentOptions(); writeSettingsInputs(); refreshComponentPowerOptions(); renderLaserPowerRates(); renderPriceTable(); calculate(); toast('Starter values restored');
     });
     $('exportBtn').addEventListener('click', () => {
       const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
@@ -759,15 +834,22 @@
         if (!parsed || !Array.isArray(parsed.materials) || !parsed.settings) throw new Error('Not a Shivalingeshwara Arts backup file');
         const map = new Map(parsed.materials.map(m => [m.id, m]));
         state.materials = DEFAULT_MATERIALS.map(def => ({...def, ...(map.get(def.id) || {})}));
-        state.settings = {...defaultSettings(), ...parsed.settings};
-        state.settings.laserPowerRates = normalizeLaserPowerRates(parsed.settings.laserPowerRates);
-        saveState(); refreshComponentOptions(); writeSettingsInputs(); renderLaserPowerOptions(); renderLaserPowerRates(); renderPriceTable(); calculate(); toast('Backup imported');
+        const importedSettings = parsed.settings;
+        let importedRates = Array.isArray(importedSettings.laserPowerRates)
+          ? clone(importedSettings.laserPowerRates)
+          : clone(DEFAULT_LASER_POWER_RATES);
+        if (Array.isArray(importedSettings.laserPowerRates) && Number(importedSettings.laserRateScaleVersion || 0) < 2) {
+          importedRates = doubleLegacyLaserRates(importedRates);
+        }
+        state.settings = {...defaultSettings(), ...importedSettings, laserRateScaleVersion: 2};
+        state.settings.laserPowerRates = normalizeLaserPowerRates(importedRates);
+        saveState(); refreshComponentOptions(); writeSettingsInputs(); refreshComponentPowerOptions(); renderLaserPowerRates(); renderPriceTable(); calculate(); toast('Backup imported');
       } catch (err) { alert('Could not import that file. Please choose a backup exported by this app.'); }
       e.target.value = '';
     });
 
     writeSettingsInputs();
-    renderLaserPowerOptions();
+    refreshComponentPowerOptions();
     renderLaserPowerRates();
     renderPriceTable();
     addComponent();
