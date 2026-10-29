@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#102c2a" />
+  <title>SArts | Material Price Estimator</title>
+  <style>
+    :root {
+      --ink: #172523;
+      --muted: #6c7b78;
+      --line: #e0e8e5;
+      --paper: #f4f7f5;
+      --card: #ffffff;
+      --forest: #153d38;
+      --forest-2: #1e554c;
+      --mint: #d9f4e8;
+      --lime: #c2f074;
+      --gold: #e8b963;
+      --red: #b83d32;
+      --shadow: 0 16px 42px rgba(17, 48, 43, .07);
+      --radius: 20px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    .shell { max-width: 1220px; margin: 0 auto; padding: 25px 24px 46px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 27px; }
+    .brand { display: flex; gap: 12px; align-items: center; }
+    .brandmark { width: 43px; height: 43px; border-radius: 14px; display: grid; place-items: center; background: var(--forest); color: var(--lime); font-weight: 900; font-size: 18px; letter-spacing: -1px; box-shadow: 0 7px 18px #153d3824; }
+    .brandname { font-weight: 800; font-size: 16px; letter-spacing: -.3px; }
+    .brandline { color: var(--muted); font-size: 12px; margin-top: 1px; }
+    .top-actions { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
+    .status { color: var(--forest-2); background: #e2f5ec; border: 1px solid #c8eadd; border-radius: 99px; padding: 7px 11px; font-size: 12px; font-weight: 700; }
+    .btn { border: 1px solid var(--line); background: white; padding: 9px 13px; border-radius: 11px; color: var(--ink); font-weight: 700; transition: .18s ease; }
+    .btn:hover { transform: translateY(-1px); border-color: #b8cbc5; }
+    .btn.primary { background: var(--forest); border-color: var(--forest); color: white; }
+    .btn.primary:hover { background: var(--forest-2); }
+    .btn.subtle { background: #edf2ef; }
+    .hero { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+    .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #347568; margin-bottom: 7px; }
+    h1 { font-size: clamp(28px, 4vw, 42px); line-height: 1.08; letter-spacing: -1.5px; margin: 0; }
+    .hero p { margin: 11px 0 0; max-width: 650px; color: var(--muted); font-size: 14px; }
+    .hero-chip { min-width: 175px; background: var(--forest); color: white; border-radius: 17px; padding: 15px 18px; box-shadow: var(--shadow); }
+    .hero-chip small { color: #b9d7cd; display: block; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+    .hero-chip strong { display: block; margin-top: 3px; font-size: 22px; letter-spacing: -.5px; }
+    .tabs { display: flex; gap: 7px; background: #e9efec; border-radius: 14px; padding: 5px; width: fit-content; margin-bottom: 18px; }
+    .tab { border: 0; background: transparent; color: #63736f; padding: 10px 16px; border-radius: 10px; font-weight: 800; }
+    .tab.active { color: var(--forest); background: white; box-shadow: 0 3px 8px #163c3510; }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(330px, .8fr); gap: 18px; align-items: start; }
+    .card { background: var(--card); border: 1px solid #e7eeeb; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .card-head { padding: 22px 23px 0; display: flex; align-items: start; justify-content: space-between; gap: 15px; }
+    .card-head h2 { font-size: 18px; letter-spacing: -.4px; margin: 0; }
+    .card-head p { color: var(--muted); margin: 5px 0 0; font-size: 12px; }
+    .card-body { padding: 21px 23px 23px; }
+    .section-label { text-transform: uppercase; font-size: 10px; letter-spacing: 1.2px; color: #72827d; font-weight: 900; margin: 0 0 12px; }
+    .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .field-grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .field { min-width: 0; }
+    label { display: block; font-size: 12px; color: #43534f; font-weight: 800; margin-bottom: 7px; }
+    .field small, .hint { font-size: 11px; color: var(--muted); display: block; margin-top: 5px; }
+    input, select { width: 100%; border: 1px solid #dce5e1; background: #fbfcfb; border-radius: 10px; padding: 11px 12px; outline: none; color: var(--ink); min-height: 43px; }
+    input:focus, select:focus { border-color: #6ba89a; box-shadow: 0 0 0 3px #d9f4e8; background: white; }
+    input[type=number] { font-variant-numeric: tabular-nums; }
+    .component-tools { display:flex; align-items:center; justify-content:space-between; gap:12px; margin: 4px 0 12px; flex-wrap:wrap; }
+    .component-tools strong { font-size:13px; }
+    .component-list { display:grid; gap:12px; }
+    .component-row { border:1px solid var(--line); background:#fcfdfc; border-radius:14px; padding:14px; }
+    .component-row-head { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+    .component-row-head strong { font-size:12px; }
+    .remove-component { border:0; background:#fae9e6; color:#9a332b; border-radius:8px; padding:6px 9px; font-size:11px; font-weight:800; }
+    .component-grid { display:grid; grid-template-columns:minmax(180px, 2fr) repeat(4, minmax(90px, 1fr)); gap:10px; align-items:end; }
+    .component-grid label { font-size:11px; }
+    .component-grid input, .component-grid select { min-height:39px; padding:9px; }
+    .component-summary { color:var(--forest-2); background:#eff7f2; border-radius:9px; padding:8px 10px; margin-top:10px; font-size:11px; font-weight:800; }
+    .gst-field { max-width:260px; margin-top:14px; }
+    .subtotal-hint { color:#d2e4dd; font-size:11px; margin-top:9px; }
+    .divider { height: 1px; background: var(--line); margin: 21px 0; }
+    .inline-price { display: flex; align-items: center; gap: 9px; }
+    .inline-price input { font-weight: 800; font-size: 16px; }
+    .currency { font-size: 12px; font-weight: 800; color: var(--muted); margin-left: -2px; }
+    .charge-note { background: #f4f8f6; border: 1px solid #e1ebe6; color: #62736e; font-size: 11px; padding: 10px 12px; border-radius: 10px; margin-top: 13px; }
+    .calc-card { background: var(--forest); color: white; border-radius: var(--radius); padding: 23px; box-shadow: 0 16px 36px #153d3826; }
+    .calc-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+    .calc-top h2 { margin: 0; font-size: 17px; letter-spacing: -.3px; }
+    .calc-tag { background: #2e655b; color: #d8f0e6; font-weight: 800; font-size: 10px; border-radius: 30px; padding: 6px 9px; text-transform: uppercase; letter-spacing: .7px; }
+    .grand-label { margin-top: 26px; color: #b7d2c9; font-size: 12px; font-weight: 800; }
+    .grand-total { font-size: clamp(34px, 4vw, 45px); line-height: 1.1; font-weight: 850; letter-spacing: -1.5px; margin: 4px 0 5px; font-variant-numeric: tabular-nums; }
+    .unit-price { color: #c0d9d0; font-size: 12px; }
+    .calc-divider { height: 1px; background: #ffffff20; margin: 22px 0 16px; }
+    .cost-line { display: flex; align-items: start; justify-content: space-between; gap: 16px; margin: 12px 0; font-size: 12px; color: #c3d8d1; }
+    .cost-line span:last-child { color: white; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .cost-line.main { color: white; font-size: 13px; }
+    .cost-line.total { border-top: 1px solid #ffffff27; padding-top: 15px; margin-top: 16px; color: white; font-size: 14px; font-weight: 900; }
+    .calc-actions { display: flex; gap: 8px; margin-top: 22px; }
+    .calc-actions .btn { flex: 1; }
+    .calc-actions .btn.primary { background: var(--lime); color: var(--forest); border-color: var(--lime); }
+    .calc-actions .btn.outline { color: white; background: transparent; border-color: #ffffff44; }
+    .formula { color: #c3d8d1; font-size: 11px; margin-top: 15px; }
+    .notice { padding: 12px 14px; margin-top: 17px; color: #5b6e67; background: #eaf2ee; border: 1px solid #d8e6df; border-radius: 12px; font-size: 11px; }
+    .settings-panel { display: none; }
+    .settings-panel.visible { display: block; }
+    .estimate-panel.hidden { display: none; }
+    .settings-layout { display: grid; grid-template-columns: minmax(410px, .85fr) minmax(0, 1.15fr); gap: 18px; align-items: start; }
+    .settings-box { background: white; border: 1px solid #e7eeeb; border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; }
+    .settings-box h2 { font-size: 17px; margin: 0; letter-spacing: -.3px; }
+    .settings-box > p { margin: 6px 0 17px; font-size: 12px; color: var(--muted); }
+    .setting-field { margin-bottom: 13px; }
+    .setting-field:last-child { margin-bottom: 0; }
+    .metric { background: #eff7f2; border-radius: 12px; padding: 13px; margin-top: 15px; }
+    .metric small { color: #5e746c; font-size: 11px; display: block; }
+    .metric strong { color: var(--forest); font-size: 21px; letter-spacing: -.5px; display: block; margin-top: 2px; }
+    .metric p { font-size: 10px; color: #6a7d75; margin: 5px 0 0; }
+    .settings-head { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 13px; }
+    .settings-head h2 { font-size: 18px; margin: 0; }
+    .settings-head p { color: var(--muted); font-size: 12px; margin: 4px 0 0; }
+    .search { max-width: 260px; }
+    .table-wrap { overflow: auto; max-height: 750px; border: 1px solid var(--line); border-radius: 13px; }
+    table { width: 100%; border-collapse: collapse; min-width: 620px; font-size: 12px; }
+    th { position: sticky; top: 0; z-index: 1; text-align: left; color: #52645d; background: #f2f6f4; font-size: 10px; text-transform: uppercase; letter-spacing: .7px; padding: 12px 13px; border-bottom: 1px solid var(--line); }
+    td { padding: 10px 13px; border-bottom: 1px solid #edf1ef; vertical-align: middle; }
+    tr:last-child td { border-bottom: 0; }
+    td:first-child { font-weight: 800; min-width: 205px; }
+    .rate-input { max-width: 105px; min-height: 36px; padding: 7px 9px; background: white; }
+    .power-rate-table { min-width: 420px; }
+    .power-rate-table .rate-input { max-width: 86px; width: 100%; }
+    .power-rate-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; margin: 12px 0 15px; }
+    .power-rate-note { font-size: 10px; color: var(--muted); margin-top: 7px; }
+    .type-pill { display: inline-block; border-radius: 30px; padding: 4px 7px; font-size: 10px; font-weight: 800; white-space: nowrap; }
+    .type-pill.listed { color: #236b4c; background: #ddf5e7; }
+    .type-pill.estimated { color: #825a19; background: #fff0d0; }
+    .source-link { color: #266f61; font-weight: 800; text-decoration: none; white-space: nowrap; }
+    .source-link:hover { text-decoration: underline; }
+    .group-row td { background: #f8faf9; color: #58736a; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; padding-top: 13px; padding-bottom: 9px; }
+    details { margin-top: 17px; border: 1px solid var(--line); background: #fbfcfb; border-radius: 12px; padding: 12px 14px; }
+    summary { cursor: pointer; font-weight: 800; font-size: 12px; }
+    details p, details li { color: var(--muted); font-size: 11px; }
+    details ul { padding-left: 18px; }
+    .bottom-note { color: #8a9893; font-size: 11px; margin-top: 24px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 18px); opacity: 0; pointer-events: none; background: #112f2b; color: white; padding: 12px 18px; border-radius: 12px; font-size: 12px; font-weight: 800; box-shadow: var(--shadow); transition: .25s ease; z-index: 20; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .file-input { display: none; }
+    .muted-mini { font-size: 10px; color: var(--muted); }
+    @media (max-width: 950px) {
+      .workspace { grid-template-columns: 1fr; }
+      .settings-layout { grid-template-columns: 1fr; }
+      .component-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .component-grid .component-material-field { grid-column: 1 / -1; }
+      .settings-config { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0 14px; }
+      .settings-config .metric { grid-column: 1 / -1; }
+    }
+    @media (max-width: 620px) {
+      .shell { padding: 17px 13px 30px; }
+      .topbar { align-items: start; }
+      .top-actions { justify-content: end; }
+      .status { display: none; }
+      .hero { display: block; }
+      .hero-chip { display: inline-block; margin-top: 18px; min-width: 165px; }
+      .card-head { padding: 18px 17px 0; }
+      .card-body { padding: 18px 17px; }
+      .field-grid, .field-grid.three { grid-template-columns: 1fr 1fr; }
+      .component-grid { grid-template-columns: 1fr 1fr; }
+      .component-grid .component-material-field { grid-column: 1 / -1; }
+      .settings-config { display: block; }
+      .calc-card { padding: 20px; }
+      .search { max-width: 100%; width: 100%; }
+      .settings-head { align-items: stretch; }
+    }
+    @media print {
+      body { background: white; }
+      .shell { padding: 0; max-width: none; }
+      .topbar, .tabs, .hero-chip, .calc-actions, .top-actions, .notice, .bottom-note, .settings-panel, .component-tools button, .remove-component { display: none !important; }
+      .hero { margin: 0 0 16px; }
+      .hero p { color: #555; }
+      .workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .card, .calc-card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+      .calc-card { background: white; color: black; }
+      .grand-label, .unit-price, .cost-line, .cost-line span:last-child, .calc-top h2, .formula { color: #222 !important; }
+      .calc-divider, .cost-line.total { border-color: #ddd; }
+      .calc-divider { background: #ddd; }
+      .estimate-panel.hidden { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brandmark">SA</div>
+        <div><div class="brandname">Shivalingeshwara Arts</div><div class="brandline">Material pricing workspace</div></div>
+      </div>
+      <div class="top-actions">
+        <span class="status">● Saves on this device</span>
+        <button class="btn" id="exportBtn" type="button">Export backup</button>
+        <button class="btn" id="importBtn" type="button">Import backup</button>
+        <input class="file-input" id="importFile" type="file" accept="application/json,.json" />
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Simple pricing tool · Offline-ready</div>
+        <h1>Material Price Estimator</h1>
+        <p>Build one product from multiple materials, calculate the complete order price, add fixed rupee charges and optionally apply 18% GST. Every material rate can be edited in the app.</p>
+      </div>
+      <div class="hero-chip"><small>Estimate currency</small><strong>₹ INR <span style="color:var(--lime)">/ product</span></strong></div>
+    </section>
+
+    <nav class="tabs" aria-label="App sections">
+      <button class="tab active" id="estimateTab" type="button">01&nbsp; Estimate</button>
+      <button class="tab" id="settingsTab" type="button">02&nbsp; Edit prices & settings</button>
+    </nav>
+
+    <main>
+      <section class="estimate-panel" id="estimatePanel">
+        <div class="workspace">
+          <section class="card">
+            <div class="card-head">
+              <div><h2>Build an estimate</h2><p>Select a material and enter the job size.</p></div>
+              <span class="type-pill listed">Live calculation</span>
+            </div>
+            <div class="card-body">
+              <div class="section-label">Product details</div>
+              <div class="field-grid" style="margin-bottom:19px">
+                <div class="field"><label for="productName">Product name (optional)</label><input id="productName" type="text" placeholder="e.g. Layered name board" /></div>
+                <div class="field"><label for="productQuantity">Number of products</label><input id="productQuantity" type="number" min="1" step="1" value="1" /><small>How many identical finished products to make</small></div>
+              </div>
+              <div class="component-tools"><strong>Materials used in one product</strong><button class="btn primary" type="button" id="addComponentBtn">+ Add material</button></div>
+              <div id="componentRows" class="component-list"></div>
+              <div class="notice" style="margin-top:13px">For each component, enter the size of one material piece and how many pieces are used in one product. The app multiplies material usage by the number of products. Material rates are editable here or in price settings.</div>
+              <div class="divider"></div>
+              <div class="section-label">Laser power & machine time</div>
+              <div class="field-grid">
+                <div class="field"><label for="laserPower">Laser power setting</label><select id="laserPower" aria-label="Laser power percentage"><option value="75" selected>75% power — ₹0.20/min</option></select><small id="laserPowerHint">Estimated consumption and electricity rate for the selected power.</small></div>
+                <div class="field"><label for="machineMinutes">Machine time for entire order (min)</label><input id="machineMinutes" type="number" min="0" step="1" value="0" /><small>Enter the total time for all products at this selected power setting.</small></div>
+              </div>
+              <div class="charge-note">If the job uses several power settings, enter the machine time at the main/average setting for a simple estimate. Electricity uses the editable ₹/minute rate in settings, not tube wattage × power percentage.</div>
+              <div class="divider"></div>
+              <div class="section-label">Additional fixed charges</div>
+              <div class="field-grid three">
+                <div class="field"><label for="designCharge">Design charge (₹)</label><input id="designCharge" type="number" min="0" step="1" value="0" /><small>Fixed amount for the whole job</small></div>
+                <div class="field"><label for="labourCharge">Labour / making (₹)</label><input id="labourCharge" type="number" min="0" step="1" value="0" /><small>Fixed amount for the whole job</small></div>
+                <div class="field"><label for="wastageCharge">Maintenance / wastage (₹)</label><input id="wastageCharge" type="number" min="0" step="1" value="0" /><small>Fixed amount for the whole job</small></div>
+              </div>
+              <div class="field gst-field"><label for="gstRate">GST</label><select id="gstRate"><option value="0">No GST (0%)</option><option value="18">Add GST (18%)</option></select><small>GST is calculated on the estimate subtotal.</small></div>
+              <div class="charge-note">Design, labour/making and maintenance/wastage are fixed rupee charges for the whole order. Set these amounts once for this estimate.</div>
+            </div>
+          </section>
+
+          <aside>
+            <section class="calc-card">
+              <div class="calc-top"><h2>Estimate summary</h2><span class="calc-tag">Live total</span></div>
+              <div class="grand-label">Estimated customer price</div>
+              <div class="grand-total" id="grandTotal">₹0.00</div>
+              <div class="unit-price" id="unitPrice">₹0.00 per piece · ₹0.00 per sq.ft</div>
+              <div class="calc-divider"></div>
+              <div class="cost-line main"><span>All material components</span><span id="materialCost">₹0.00</span></div>
+              <div class="cost-line"><span>Design</span><span id="designCost">₹0.00</span></div>
+              <div class="cost-line"><span>Labour / making</span><span id="labourCost">₹0.00</span></div>
+              <div class="cost-line"><span>Maintenance / wastage</span><span id="wastageCost">₹0.00</span></div>
+              <div class="cost-line"><span>Laser electricity</span><span id="machineCost">₹0.00</span></div>
+              <div class="cost-line"><span>Subtotal before GST</span><span id="subtotalCost">₹0.00</span></div>
+              <div class="cost-line"><span id="gstSummaryLabel">GST (0%)</span><span id="gstCost">₹0.00</span></div>
+              <div class="cost-line total"><span>Final estimate (including GST)</span><span id="finalTotal">₹0.00</span></div>
+              <div class="subtotal-hint" id="productSummary"></div>
+              <div class="formula" id="machineFormula">Laser electricity uses the selected power setting and editable cost per minute.</div>
+              <div class="calc-actions"><button class="btn primary" type="button" id="printBtn">Print / Save PDF</button><button class="btn outline" type="button" id="clearBtn">Reset form</button></div>
+            </section>
+            <div class="notice"><strong>Important:</strong> online prices below are starter references, not confirmed quotes from your supplier in Haveri. Sheet grade, density, colour, size, GST and transport can change the real cost.</div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="settings-panel" id="settingsPanel">
+        <div class="settings-layout">
+          <section class="settings-box">
+            <h2>Machine & default settings</h2>
+            <p>Based on your earlier machine and electricity details. Edit anything here; changes are saved automatically.</p>
+            <div class="settings-config">
+              <div class="setting-field"><label for="monthlyHours">Machine runtime / month (hours)</label><input id="monthlyHours" type="number" min="0" step="1" value="20" /><small class="hint">Your history: machine use is less than around 20 hours/month.</small></div>
+              <div class="setting-field"><label for="monthlyBill">Approx. total monthly power bill (₹)</label><input id="monthlyBill" type="number" min="0" step="50" value="1000" /><small class="hint">Your history: bill is nearly ₹1,000/month; PC runs ~10 h/day and fan ~8 h/day.</small></div>
+              <div class="setting-field"><label for="defaultDesignCharge">Default design charge (₹ / job)</label><input id="defaultDesignCharge" type="number" min="0" step="1" value="0" /></div>
+              <div class="setting-field"><label for="defaultLabourCharge">Default labour / making (₹ / job)</label><input id="defaultLabourCharge" type="number" min="0" step="1" value="0" /></div>
+              <div class="setting-field"><label for="defaultWastageCharge">Default maintenance / wastage (₹ / job)</label><input id="defaultWastageCharge" type="number" min="0" step="1" value="0" /></div>
+            </div>
+            <div class="section-label" style="margin-top:19px">Laser power electricity rates</div>
+            <div class="power-rate-wrap">
+              <table class="power-rate-table">
+                <thead><tr><th>Laser power</th><th>Units/hour</th><th>Cost/min</th><th>Cost/hour*</th></tr></thead>
+                <tbody id="laserPowerRatesBody"></tbody>
+              </table>
+            </div>
+            <div class="power-rate-note">The rounded cost/min is used for each quote. The hourly value is kept as provided in your reference table, so it may not equal cost/min × 60 exactly. Edit every value here; changes save automatically.</div>
+            <div class="metric"><small>Estimated laser electricity / month at 100% power</small><strong id="monthlyLaserCost">₹272.00</strong><p id="monthlyPowerExplain">100% power hourly reference × monthly runtime. Estimate only.</p></div>
+            <div class="metric"><small>Difference against total bill benchmark</small><strong id="otherPowerCost">₹728.00</strong><p>Remaining bill estimate after subtracting the 100% power benchmark. Not allocated into estimates automatically.</p></div>
+            <div class="notice">Job laser electricity is calculated as machine minutes × the selected power setting's cost/min. The supplied table is an estimate, not a power-meter measurement. It does not include CO₂ tube wear/replacement, depreciation, repairs, or chiller/pump wear. Monthly comparison assumes all entered machine hours run at 100% power.</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:17px"><button class="btn" id="resetDefaultsBtn" type="button">Restore starter values</button></div>
+          </section>
+
+          <section class="settings-box">
+            <div class="settings-head"><div><h2>Material price list</h2><p>Edit any rate; values are stored in this browser.</p></div><input id="priceSearch" class="search" type="search" placeholder="Search material or colour…" aria-label="Search materials" /></div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Material / variant</th><th>₹ per sq.ft</th><th>Initial value</th><th>Source</th></tr></thead>
+                <tbody id="priceTableBody"></tbody>
+              </table>
+            </div>
+            <details>
+              <summary>How starter prices were chosen</summary>
+              <p>Prices were collected from publicly listed Indian supplier pages searched on 29 October 2026. These pages do not all describe the same grade or region, so they are reference starting points only. The app labels rates as “Listed” when a close thickness/variant and price were found, and “Estimated” when a rate was interpolated or a directly matching listing was unavailable.</p>
+              <ul>
+                <li>Thermocol rates are calculated from example piece prices and sizes on supplier listings; the listed sheet sizes differ, so use your own stock dimensions and purchase cost.</li>
+                <li>MDF values use online price lists for 2 mm, 3 mm, 5 mm and nearby thicknesses; 6 mm is estimated between nearby listings.</li>
+                <li>PVC foam values use available sheet listings and economy-grade price lists. Density and quality can produce very different prices.</li>
+                <li>PVC/WPC board uses listed WPC values for 6 mm, 8 mm and 12 mm; 3 mm is estimated because a matching listing was not found.</li>
+                <li>ACP rates are starter references for 3 mm PE signage/interior grades. Premium finishes are set higher based on published finish ranges.</li>
+                <li>Acrylic rates use online 8×4 ft price lists. 4 mm and some special acrylic variants are estimated from nearby thickness values.</li>
+                <li>Adhesive mirror acrylic is based on a nearby self-adhesive mirror acrylic listing; an exact 2 mm listing was not found.</li>
+              </ul>
+            </details>
+            <details>
+              <summary>Price sources used</summary>
+              <ul>
+                <li><a href="https://www.rajatradingindia.com/thermocol-sheets.html" target="_blank" rel="noreferrer">Thermocol 12 mm piece price and size</a></li>
+                <li><a href="https://www.rsenterpriseshyd.com/thermocol-sheet.html" target="_blank" rel="noreferrer">Thermocol 12 mm and 18 mm sample piece sizes/prices</a></li>
+                <li><a href="https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf" target="_blank" rel="noreferrer">MDF supplier rate card (effective May 2026)</a></li>
+                <li><a href="https://www.hdhmr.in/blog/mdf-board-8x4-price/" target="_blank" rel="noreferrer">MDF thickness price guide</a></li>
+                <li><a href="https://arhamindustry.in/sitemap.html" target="_blank" rel="noreferrer">PVC foam/sunboard example sheet prices</a></li>
+                <li><a href="https://samtaplywood.in/flexibond-pvc-board/pvc-price-list" target="_blank" rel="noreferrer">PVC foam board price list</a></li>
+                <li><a href="https://materialdepot.com/wpc-board" target="_blank" rel="noreferrer">WPC sheet rates by thickness</a></li>
+                <li><a href="https://materialdepot.com/acp" target="_blank" rel="noreferrer">ACP solid colour and premium finish prices</a></li>
+                <li><a href="https://vivaacp.com/acp-sheet-price/per-square-foot" target="_blank" rel="noreferrer">ACP colour/finish ranges</a></li>
+                <li><a href="https://www.acrylichub.in/acrylic-sheet.html" target="_blank" rel="noreferrer">Acrylic sheet rates by thickness</a></li>
+                <li><a href="https://www.acrylichub.in/clear-acrylic-sheet.html" target="_blank" rel="noreferrer">Clear acrylic sheet rates</a></li>
+                <li><a href="https://www.mahadevacrylics.com/acrylic-mirror-sheet.html" target="_blank" rel="noreferrer">Mirror acrylic examples</a></li>
+                <li><a href="https://www.polymercrafts.in/acrylic-sheets-clear-blocks.html" target="_blank" rel="noreferrer">Self-adhesive mirror acrylic listing</a></li>
+                <li><a href="https://electricbilltool.com/hescom-unit-rate-calculator/" target="_blank" rel="noreferrer">HESCOM example tariff guide (current bill category may differ)</a></li>
+              </ul>
+              <p>Supplier asking prices may exclude GST, delivery or bulk-order conditions. Please replace these with actual invoice rates before relying on the estimate for customer quotations.</p>
+            </details>
+          </section>
+        </div>
+      </section>
+    </main>
+    <footer class="bottom-note"><span>SArts Material Price Estimator · No server or account required</span><span>Data stays in this browser · Export a backup before clearing browser data</span></footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite">Saved</div>
+
+  <script>
+    const STORAGE_KEY = 'sarts-material-estimator-v2';
+    const LEGACY_STORAGE_KEY = 'sarts-material-estimator-v1';
+    const DEFAULT_LASER_POWER_RATES = [
+      { power: 10, unitsPerHour: 1.24, costPerMin: 0.14, costPerHour: 8.40 },
+      { power: 20, unitsPerHour: 1.32, costPerMin: 0.15, costPerHour: 8.98 },
+      { power: 40, unitsPerHour: 1.49, costPerMin: 0.17, costPerHour: 10.13 },
+      { power: 60, unitsPerHour: 1.66, costPerMin: 0.19, costPerHour: 11.29 },
+      { power: 75, unitsPerHour: 1.79, costPerMin: 0.20, costPerHour: 12.16 },
+      { power: 85, unitsPerHour: 1.87, costPerMin: 0.21, costPerHour: 12.73 },
+      { power: 100, unitsPerHour: 2.00, costPerMin: 0.23, costPerHour: 13.60 }
+    ];
+    const DEFAULT_SETTINGS = {
+      laserPowerRates: DEFAULT_LASER_POWER_RATES,
+      monthlyHours: 20,
+      monthlyBill: 1000,
+      defaultDesignCharge: 0,
+      defaultLabourCharge: 0,
+      defaultWastageCharge: 0
+    };
+    function defaultSettings() {
+      return { ...DEFAULT_SETTINGS, laserPowerRates: clone(DEFAULT_LASER_POWER_RATES) };
+    }
+    function normalizeLaserPowerRates(rates) {
+      return DEFAULT_LASER_POWER_RATES.map(base => {
+        const custom = Array.isArray(rates) ? rates.find(rate => Number(rate.power) === base.power) : null;
+        const merged = { ...base, ...(custom || {}), power: base.power };
+        merged.unitsPerHour = Math.max(0, Number(merged.unitsPerHour) || 0);
+        merged.costPerMin = Math.max(0, Number(merged.costPerMin) || 0);
+        merged.costPerHour = Math.max(0, Number(merged.costPerHour) || 0);
+        return merged;
+      });
+    }
+
+    const DEFAULT_MATERIALS = [
+      {id:'thermocol-12', group:'Thermocol', name:'Thermocol 12 mm', rate:2.71, basis:'Listed', source:'Supplier listing', url:'https://www.rsenterpriseshyd.com/thermocol-sheet.html', note:'Calculated from ₹10 per 28×19 in example piece.'},
+      {id:'thermocol-18', group:'Thermocol', name:'Thermocol 18 mm', rate:9.65, basis:'Listed', source:'Supplier listing', url:'https://www.rsenterpriseshyd.com/thermocol-sheet.html', note:'Calculated from ₹14 per 19×11 in example piece.'},
+
+      {id:'mdf-2', group:'MDF', name:'MDF 2 mm', rate:5.75, basis:'Listed', source:'MDF price list', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Interior MDF listing.'},
+      {id:'mdf-3', group:'MDF', name:'MDF 3 mm', rate:8.75, basis:'Listed', source:'MDF price list', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Interior MDF listing.'},
+      {id:'mdf-5', group:'MDF', name:'MDF 5 mm', rate:16.50, basis:'Listed', source:'MDF price list', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Plain imported MDF listing.'},
+      {id:'mdf-6', group:'MDF', name:'MDF 6 mm', rate:20, basis:'Estimated', source:'Nearby thickness', url:'https://www.hdhmr.in/blog/mdf-board-8x4-price/', note:'Estimated from nearby 5.5/7 mm and 4–6 mm guide ranges.'},
+
+      {id:'pvcfoam-2', group:'PVC Foam', name:'PVC Foam 2 mm', rate:6.25, basis:'Listed', source:'Sheet listing', url:'https://arhamindustry.in/sitemap.html', note:'₹200 per 8×4 ft sheet example.'},
+      {id:'pvcfoam-3', group:'PVC Foam', name:'PVC Foam 3 mm', rate:6.72, basis:'Listed', source:'Sheet listing', url:'https://arhamindustry.in/sitemap.html', note:'₹215 per 8×4 ft example sheet.'},
+      {id:'pvcfoam-5', group:'PVC Foam', name:'PVC Foam 5 mm', rate:11.67, basis:'Listed', source:'Sheet listing', url:'https://arhamindustry.in/sitemap.html', note:'₹210 per 3×6 ft example sheet; grade may differ.'},
+      {id:'pvcfoam-6', group:'PVC Foam', name:'PVC Foam 6 mm', rate:18, basis:'Estimated', source:'Nearby thickness', url:'https://samtaplywood.in/flexibond-pvc-board/pvc-price-list', note:'Estimated; 6 mm varies widely by density and grade.'},
+
+      {id:'wpc-3', group:'PVC/WPC Board', name:'PVC/WPC Board 3 mm', rate:30, basis:'Estimated', source:'Nearby thickness', url:'https://materialdepot.com/wpc-board', note:'No exact matching 3 mm listing; estimated below 6 mm.'},
+      {id:'wpc-6', group:'PVC/WPC Board', name:'PVC/WPC Board 6 mm', rate:50, basis:'Listed', source:'WPC rate listing', url:'https://materialdepot.com/wpc-board', note:'Listed WPC sheet rate.'},
+      {id:'wpc-8', group:'PVC/WPC Board', name:'PVC/WPC Board 8 mm', rate:69, basis:'Listed', source:'WPC rate listing', url:'https://materialdepot.com/wpc-board', note:'Listed WPC sheet rate.'},
+      {id:'wpc-12', group:'PVC/WPC Board', name:'PVC/WPC Board 12 mm', rate:100, basis:'Listed', source:'WPC rate listing', url:'https://materialdepot.com/wpc-board', note:'Listed WPC sheet rate.'},
+
+      {id:'acp-white', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — White / solid', rate:116, basis:'Listed', source:'ACP product listing', url:'https://materialdepot.com/acp', note:'Example white 3 mm solid-colour panel.'},
+      {id:'acp-black', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Black / solid', rate:116, basis:'Estimated', source:'Basic colour range', url:'https://vivaacp.com/acp-sheet-price/per-square-foot', note:'Same starter rate as standard solid-colour finish.'},
+      {id:'acp-red', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Red / solid', rate:109, basis:'Listed', source:'ACP product listing', url:'https://materialdepot.com/acp', note:'Example glossy red 3 mm panel.'},
+      {id:'acp-blue', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Blue / solid', rate:116, basis:'Estimated', source:'Basic colour range', url:'https://vivaacp.com/acp-sheet-price/per-square-foot', note:'Standard solid-colour starting value.'},
+      {id:'acp-green', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Green / solid', rate:116, basis:'Estimated', source:'Basic colour range', url:'https://vivaacp.com/acp-sheet-price/per-square-foot', note:'Standard solid-colour starting value.'},
+      {id:'acp-yellow', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Yellow / solid', rate:116, basis:'Estimated', source:'Basic colour range', url:'https://vivaacp.com/acp-sheet-price/per-square-foot', note:'Standard solid-colour starting value.'},
+      {id:'acp-orange', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Orange / solid', rate:116, basis:'Estimated', source:'Basic colour range', url:'https://vivaacp.com/acp-sheet-price/per-square-foot', note:'Standard solid-colour starting value.'},
+      {id:'acp-brown', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Brown / solid', rate:116, basis:'Estimated', source:'Basic colour range', url:'https://vivaacp.com/acp-sheet-price/per-square-foot', note:'Standard solid-colour starting value.'},
+      {id:'acp-grey', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Grey / solid', rate:116, basis:'Estimated', source:'Basic colour range', url:'https://vivaacp.com/acp-sheet-price/per-square-foot', note:'Standard solid-colour starting value.'},
+      {id:'acp-metallic', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Silver / metallic grey', rate:149, basis:'Listed', source:'ACP product listing', url:'https://materialdepot.com/acp', note:'Example metallic grey 3 mm panel.'},
+      {id:'acp-gold', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Gold metallic', rate:149, basis:'Estimated', source:'Premium finish range', url:'https://vivaacp.com/acp-sheet-price/per-square-foot', note:'Estimated from metallic/premium finish listings.'},
+      {id:'acp-brushed-silver', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Brushed silver', rate:149, basis:'Estimated', source:'Premium finish range', url:'https://vivaacp.com/acp-sheet-price/per-square-foot', note:'Approximate finish-based rate; verify shade/brand.'},
+      {id:'acp-brushed-gold', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Brushed gold', rate:159, basis:'Estimated', source:'Premium finish range', url:'https://vivaacp.com/acp-sheet-price/per-square-foot', note:'Approximate finish-based rate; verify shade/brand.'},
+      {id:'acp-mirror-silver', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Mirror silver', rate:160, basis:'Listed', source:'ACP finish range', url:'https://vivaacp.com/acp-sheet-price/3mm', note:'Within published mirror finish range.'},
+      {id:'acp-mirror-gold', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Mirror gold', rate:160, basis:'Listed', source:'ACP finish range', url:'https://vivaacp.com/acp-sheet-price/3mm', note:'Within published mirror finish range.'},
+      {id:'acp-wood', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Wood finish', rate:229, basis:'Listed', source:'ACP finish range', url:'https://materialdepot.com/acp', note:'Example premium wood/abstract finish.'},
+      {id:'acp-marble', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Marble / texture', rate:229, basis:'Listed', source:'ACP finish range', url:'https://vivaacp.com/acp-sheet-price/3mm', note:'Premium printed/texture finish reference.'},
+      {id:'acp-custom', group:'ACP Sheet · colour-wise (3 mm PE starter rates)', name:'ACP — Other / custom colour', rate:180, basis:'Estimated', source:'Premium colour range', url:'https://vivaacp.com/acp-sheet-price/per-square-foot', note:'Editable placeholder; actual custom shade quote may vary.'},
+
+      {id:'acrylic-2', group:'Acrylic', name:'Acrylic 2 mm', rate:76.56, basis:'Listed', source:'May 2026 rate card', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Imported colour acrylic per sq.ft from supplier rate card.'},
+      {id:'acrylic-3', group:'Acrylic', name:'Acrylic 3 mm', rate:105.47, basis:'Listed', source:'May 2026 rate card', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Imported colour acrylic per sq.ft from supplier rate card.'},
+      {id:'acrylic-4', group:'Acrylic', name:'Acrylic 4 mm', rate:141.40, basis:'Listed', source:'May 2026 rate card', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Imported colour acrylic per sq.ft from supplier rate card.'},
+      {id:'acrylic-5', group:'Acrylic', name:'Acrylic 5 mm', rate:183.59, basis:'Listed', source:'May 2026 rate card', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Imported colour acrylic per sq.ft from supplier rate card.'},
+      {id:'acrylic-6', group:'Acrylic', name:'Acrylic 6 mm', rate:221.88, basis:'Listed', source:'May 2026 rate card', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Imported colour acrylic per sq.ft from supplier rate card.'},
+
+      {id:'clear-2', group:'Clear Acrylic', name:'Clear acrylic 2 mm', rate:73.44, basis:'Listed', source:'May 2026 rate card', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Imported clear acrylic per sq.ft from supplier rate card.'},
+      {id:'clear-3', group:'Clear Acrylic', name:'Clear acrylic 3 mm', rate:100.78, basis:'Listed', source:'May 2026 rate card', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Imported clear acrylic per sq.ft from supplier rate card.'},
+      {id:'clear-4', group:'Clear Acrylic', name:'Clear acrylic 4 mm', rate:135.16, basis:'Listed', source:'May 2026 rate card', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Imported clear acrylic per sq.ft from supplier rate card.'},
+      {id:'clear-5', group:'Clear Acrylic', name:'Clear acrylic 5 mm', rate:175, basis:'Listed', source:'May 2026 rate card', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Imported clear acrylic per sq.ft from supplier rate card.'},
+      {id:'clear-6', group:'Clear Acrylic', name:'Clear acrylic 6 mm', rate:212.50, basis:'Listed', source:'May 2026 rate card', url:'https://5.imimg.com/data5/SELLER/Doc/2026/5/609837495/VD/JC/NN/236962353/plain-imported-mdf-sheets.pdf', note:'Imported clear acrylic per sq.ft from supplier rate card.'},
+
+      {id:'mirror-2', group:'Mirror Acrylic', name:'Mirror acrylic 2 mm', rate:175, basis:'Listed', source:'Mirror acrylic listing', url:'https://www.mahadevacrylics.com/acrylic-mirror-sheet.html', note:'Sample mirror acrylic market listing; colour and supplier vary.'},
+      {id:'mirror-3', group:'Mirror Acrylic', name:'Mirror acrylic 3 mm', rate:190, basis:'Listed', source:'Mirror acrylic listing', url:'https://www.mahadevacrylics.com/acrylic-mirror-sheet.html', note:'Listed range for 2–3 mm mirror acrylic.'},
+      {id:'mirror-5', group:'Mirror Acrylic', name:'Mirror acrylic 5 mm', rate:250, basis:'Estimated', source:'Nearby thickness', url:'https://www.mahadevacrylics.com/acrylic-mirror-sheet.html', note:'Estimated; exact 5 mm listing was not found.'},
+
+      {id:'stick-mirror-2', group:'Stickable Mirror Acrylic', name:'Stickable mirror acrylic 2 mm', rate:130, basis:'Estimated', source:'Self-adhesive listing', url:'https://www.polymercrafts.in/acrylic-sheets-clear-blocks.html', note:'Based on a listed self-adhesive 3 mm mirror acrylic; 2 mm exact rate not found.'}
+    ];
+
+    let state = loadState();
+    let toastTimer;
+    const $ = id => document.getElementById(id);
+    const money = n => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2, minimumFractionDigits: 2 }).format(Number.isFinite(n) ? n : 0);
+    const number = id => Math.max(0, Number($(id).value) || 0);
+
+    function clone(value) { return JSON.parse(JSON.stringify(value)); }
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (saved && Array.isArray(saved.materials) && saved.settings) {
+          const savedMap = new Map(saved.materials.map(m => [m.id, m]));
+          const materials = DEFAULT_MATERIALS.map(def => ({ ...def, ...(savedMap.get(def.id) || {}), id:def.id, group:def.group, name:def.name, basis:def.basis, source:def.source, url:def.url, note:def.note }));
+          const settings = { ...defaultSettings(), ...saved.settings };
+          settings.laserPowerRates = normalizeLaserPowerRates(saved.settings.laserPowerRates);
+          return { materials, settings };
+        }
+      } catch (e) { /* try the prior version below */ }
+      // Migrate prior version: keep custom material rates and machine settings, but reset the old fixed-amount add-ons.
+      try {
+        const legacy = JSON.parse(localStorage.getItem(LEGACY_STORAGE_KEY));
+        if (legacy && Array.isArray(legacy.materials) && legacy.settings) {
+          const savedMap = new Map(legacy.materials.map(m => [m.id, m]));
+          const materials = DEFAULT_MATERIALS.map(def => ({ ...def, ...(savedMap.get(def.id) || {}), id:def.id, group:def.group, name:def.name, basis:def.basis, source:def.source, url:def.url, note:def.note }));
+          const settings = {
+            ...defaultSettings(),
+            monthlyHours: legacy.settings.monthlyHours ?? DEFAULT_SETTINGS.monthlyHours,
+            monthlyBill: legacy.settings.monthlyBill ?? DEFAULT_SETTINGS.monthlyBill,
+            laserPowerRates: clone(DEFAULT_LASER_POWER_RATES)
+          };
+          const migrated = { materials, settings };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+          return migrated;
+        }
+      } catch (e) { /* use starter values if saved data is unreadable */ }
+      return { materials: clone(DEFAULT_MATERIALS), settings: defaultSettings() };
+    }
+    function saveState(showToast = false) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      if (showToast) toast('Saved on this device');
+      renderMonthlyPower();
+    }
+    function toast(message) {
+      $('toast').textContent = message;
+      $('toast').classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => $('toast').classList.remove('show'), 2200);
+    }
+    let componentCounter = 0;
+    function materialOptionsHtml(selectedId) {
+      const groups = [...new Set(state.materials.map(m => m.group))];
+      return groups.map(group => `<optgroup label="${escapeHtml(group)}">${state.materials.filter(m => m.group === group).map(m => `<option value="${m.id}" ${m.id === selectedId ? 'selected' : ''}>${escapeHtml(m.name)}</option>`).join('')}</optgroup>`).join('');
+    }
+    function addComponent(materialId = state.materials[0]?.id, width = 1, height = 1, pieces = 1) {
+      if (!state.materials.length) return;
+      componentCounter += 1;
+      const id = `component-${componentCounter}`;
+      const row = document.createElement('div');
+      row.className = 'component-row'; row.dataset.componentId = id;
+      row.innerHTML = `
+        <div class="component-row-head"><strong>Material component <span class="component-number">${document.querySelectorAll('.component-row').length + 1}</span></strong><button class="remove-component" type="button" data-remove-component="${id}">Remove</button></div>
+        <div class="component-grid">
+          <div class="field component-material-field"><label>Material / variant</label><select data-component-material>${materialOptionsHtml(materialId)}</select></div>
+          <div class="field"><label>Rate (₹/sq.ft)</label><input data-component-rate type="number" min="0" step="0.01" value="${Number(state.materials.find(m => m.id === materialId)?.rate || 0)}" /></div>
+          <div class="field"><label>Width (ft)</label><input data-component-width type="number" min="0" step="0.01" value="${width}" /></div>
+          <div class="field"><label>Height (ft)</label><input data-component-height type="number" min="0" step="0.01" value="${height}" /></div>
+          <div class="field"><label>Pieces / product</label><input data-component-pieces type="number" min="0" step="1" value="${pieces}" /></div>
+        </div>
+        <div class="component-summary" data-component-summary>1.00 sq.ft per piece · ₹0.00 per product · ₹0.00 for order</div>`;
+      $('componentRows').appendChild(row);
+      row.querySelector('[data-remove-component]').addEventListener('click', () => {
+        if (document.querySelectorAll('.component-row').length <= 1) { toast('Keep at least one material component'); return; }
+        row.remove(); renumberComponents(); calculate();
+      });
+      row.querySelector('[data-component-material]').addEventListener('change', e => {
+        const item = state.materials.find(m => m.id === e.target.value);
+        row.querySelector('[data-component-rate]').value = item ? item.rate : 0;
+        calculate();
+      });
+      row.querySelector('[data-component-rate]').addEventListener('input', e => {
+        const item = state.materials.find(m => m.id === row.querySelector('[data-component-material]').value);
+        if (item) {
+          item.rate = Math.max(0, Number(e.target.value) || 0);
+          document.querySelectorAll('.component-row').forEach(otherRow => {
+            if (otherRow !== row && otherRow.querySelector('[data-component-material]').value === item.id) otherRow.querySelector('[data-component-rate]').value = item.rate;
+          });
+          saveState(); renderPriceTable();
+        }
+        calculate();
+      });
+      row.querySelectorAll('[data-component-width], [data-component-height], [data-component-pieces]').forEach(input => input.addEventListener('input', calculate));
+      calculate();
+    }
+    function renumberComponents() {
+      document.querySelectorAll('.component-row').forEach((row, index) => {
+        row.querySelector('.component-number').textContent = index + 1;
+      });
+    }
+    function refreshComponentOptions() {
+      document.querySelectorAll('.component-row').forEach(row => {
+        const select = row.querySelector('[data-component-material]');
+        const current = select.value;
+        select.innerHTML = materialOptionsHtml(current);
+        if (!state.materials.some(m => m.id === current)) select.value = state.materials[0].id;
+        const material = state.materials.find(m => m.id === select.value);
+        row.querySelector('[data-component-rate]').value = material ? material.rate : 0;
+      });
+    }
+
+    function renderLaserPowerOptions() {
+      const select = $('laserPower');
+      if (!select) return;
+      const current = Number(select.value) || 75;
+      select.innerHTML = state.settings.laserPowerRates.map(rate =>
+        `<option value="${rate.power}" ${rate.power === current ? 'selected' : ''}>${rate.power}% power — ${money(rate.costPerMin)}/min</option>`
+      ).join('');
+      if (!state.settings.laserPowerRates.some(rate => rate.power === current)) select.value = '75';
+    }
+
+    function renderLaserPowerRates() {
+      const tbody = $('laserPowerRatesBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      state.settings.laserPowerRates.forEach(rate => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${rate.power}%</strong></td>
+          <td><input class="rate-input" type="number" min="0" step="0.01" value="${rate.unitsPerHour}" data-power="${rate.power}" data-power-field="unitsPerHour" aria-label="${rate.power}% power units per hour" /></td>
+          <td><input class="rate-input" type="number" min="0" step="0.01" value="${rate.costPerMin.toFixed(2)}" data-power="${rate.power}" data-power-field="costPerMin" aria-label="${rate.power}% power cost per minute" /></td>
+          <td><input class="rate-input" type="number" min="0" step="0.01" value="${rate.costPerHour.toFixed(2)}" data-power="${rate.power}" data-power-field="costPerHour" aria-label="${rate.power}% power cost per hour" /></td>`;
+        tbody.appendChild(tr);
+      });
+      tbody.querySelectorAll('[data-power-field]').forEach(input => input.addEventListener('input', () => {
+        const power = Number(input.dataset.power);
+        const field = input.dataset.powerField;
+        const row = state.settings.laserPowerRates.find(rate => rate.power === power);
+        if (!row) return;
+        row[field] = Math.max(0, Number(input.value) || 0);
+        saveState();
+        renderLaserPowerOptions();
+        calculate();
+      }));
+    }
+
+    function renderPriceTable() {
+      const tbody = $('priceTableBody');
+      tbody.innerHTML = '';
+      const query = $('priceSearch').value.trim().toLowerCase();
+      let shownGroup = '';
+      state.materials.filter(m => `${m.group} ${m.name} ${m.note}`.toLowerCase().includes(query)).forEach(m => {
+        if (m.group !== shownGroup) {
+          shownGroup = m.group;
+          const groupRow = document.createElement('tr'); groupRow.className = 'group-row';
+          groupRow.innerHTML = `<td colspan="4">${escapeHtml(m.group)}</td>`;
+          tbody.appendChild(groupRow);
+        }
+        const row = document.createElement('tr');
+        const pillClass = m.basis === 'Listed' ? 'listed' : 'estimated';
+        row.innerHTML = `
+          <td title="${escapeHtml(m.note)}">${escapeHtml(m.name)}<div class="muted-mini">${escapeHtml(m.note)}</div></td>
+          <td><input class="rate-input" type="number" min="0" step="0.01" value="${Number(m.rate)}" data-rate-id="${m.id}" aria-label="${escapeHtml(m.name)} rate per square foot" /></td>
+          <td><span class="type-pill ${pillClass}">${escapeHtml(m.basis)}</span></td>
+          <td><a class="source-link" href="${m.url}" target="_blank" rel="noreferrer">Source ↗</a></td>`;
+        tbody.appendChild(row);
+      });
+      tbody.querySelectorAll('[data-rate-id]').forEach(input => input.addEventListener('input', () => {
+        const item = state.materials.find(m => m.id === input.dataset.rateId);
+        if (!item) return;
+        item.rate = Math.max(0, Number(input.value) || 0);
+        document.querySelectorAll('.component-row').forEach(row => {
+          if (row.querySelector('[data-component-material]').value === item.id) row.querySelector('[data-component-rate]').value = item.rate;
+        });
+        saveState(); calculate();
+      }));
+      if (!tbody.children.length) tbody.innerHTML = '<tr><td colspan="4">No matching material.</td></tr>';
+    }
+    function escapeHtml(text) { return String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    function calculate() {
+      const productQty = Math.max(1, Math.floor(Number($('productQuantity').value) || 1));
+      const design = number('designCharge');
+      const labour = number('labourCharge');
+      const wastage = number('wastageCharge');
+      const mins = number('machineMinutes');
+      const gstRate = Math.max(0, Number($('gstRate').value) || 0);
+      let material = 0;
+      let totalMaterialArea = 0;
+      document.querySelectorAll('.component-row').forEach((row, index) => {
+        const materialId = row.querySelector('[data-component-material]').value;
+        const item = state.materials.find(m => m.id === materialId);
+        const rate = Math.max(0, Number(row.querySelector('[data-component-rate]').value) || 0);
+        const width = Math.max(0, Number(row.querySelector('[data-component-width]').value) || 0);
+        const height = Math.max(0, Number(row.querySelector('[data-component-height]').value) || 0);
+        const piecesPerProduct = Math.max(0, Math.floor(Number(row.querySelector('[data-component-pieces]').value) || 0));
+        const areaEachPiece = width * height;
+        const areaPerProduct = areaEachPiece * piecesPerProduct;
+        const areaForOrder = areaPerProduct * productQty;
+        const componentPerProductCost = areaPerProduct * rate;
+        const componentOrderCost = areaForOrder * rate;
+        material += componentOrderCost;
+        totalMaterialArea += areaForOrder;
+        const name = item ? item.name : 'Material';
+        row.querySelector('[data-component-summary]').textContent = `${areaEachPiece.toFixed(2)} sq.ft per piece · ${piecesPerProduct} piece(s)/product · ${money(componentPerProductCost)} per product · ${money(componentOrderCost)} for order`;
+        row.setAttribute('aria-label', name);
+      });
+      const selectedPower = Number($('laserPower').value) || 75;
+      const powerRate = state.settings.laserPowerRates.find(rate => rate.power === selectedPower) || state.settings.laserPowerRates.find(rate => rate.power === 75) || state.settings.laserPowerRates[0];
+      const machine = mins * (powerRate ? powerRate.costPerMin : 0);
+      const subtotal = material + design + labour + wastage + machine;
+      const gst = subtotal * gstRate / 100;
+      const total = subtotal + gst;
+      $('materialCost').textContent = money(material);
+      $('designCost').textContent = money(design);
+      $('labourCost').textContent = money(labour);
+      $('wastageCost').textContent = money(wastage);
+      $('machineCost').textContent = money(machine);
+      $('subtotalCost').textContent = money(subtotal);
+      $('gstSummaryLabel').textContent = `GST (${gstRate}%)`;
+      $('gstCost').textContent = money(gst);
+      $('grandTotal').textContent = money(total);
+      $('finalTotal').textContent = money(total);
+      $('unitPrice').textContent = `${money(total / productQty)} per product · ${money(subtotal / productQty)} before GST`;
+      const productName = $('productName').value.trim() || 'Product';
+      $('productSummary').textContent = `${productName}: ${productQty} product(s) · ${totalMaterialArea.toFixed(2)} sq.ft total material area · ${money(total / productQty)} estimated price per product`;
+      $('laserPowerHint').textContent = powerRate ? `Estimated ${powerRate.unitsPerHour.toFixed(2)} units/hour · ${money(powerRate.costPerMin)}/min · ${money(powerRate.costPerHour)}/hour reference.` : 'Set the power cost in Edit prices & settings.';
+      $('machineFormula').textContent = powerRate ? `Laser electricity: ${mins} min × ${money(powerRate.costPerMin)}/min at ${selectedPower}% power = ${money(machine)} for this order (${powerRate.unitsPerHour.toFixed(2)} estimated units/hour).` : `Laser electricity: ${money(machine)} for this order.`;
+      state.settings.defaultDesignCharge = design;
+      state.settings.defaultLabourCharge = labour;
+      state.settings.defaultWastageCharge = wastage;
+      $('defaultDesignCharge').value = design;
+      $('defaultLabourCharge').value = labour;
+      $('defaultWastageCharge').value = wastage;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderMonthlyPower();
+    }
+
+    function renderMonthlyPower() {
+      const s = state.settings;
+      const fullPower = s.laserPowerRates.find(rate => rate.power === 100) || { costPerHour: 0 };
+      const laser = fullPower.costPerHour * s.monthlyHours;
+      const other = s.monthlyBill - laser;
+      $('monthlyLaserCost').textContent = money(laser);
+      $('monthlyPowerExplain').textContent = `${money(fullPower.costPerHour)}/hour at 100% power × ${s.monthlyHours} machine hours. Estimate only.`;
+      $('otherPowerCost').textContent = money(other);
+    }
+    function writeSettingsInputs() {
+      $('monthlyHours').value = state.settings.monthlyHours;
+      $('monthlyBill').value = state.settings.monthlyBill;
+      $('defaultDesignCharge').value = state.settings.defaultDesignCharge;
+      $('defaultLabourCharge').value = state.settings.defaultLabourCharge;
+      $('defaultWastageCharge').value = state.settings.defaultWastageCharge;
+      $('designCharge').value = state.settings.defaultDesignCharge;
+      $('labourCharge').value = state.settings.defaultLabourCharge;
+      $('wastageCharge').value = state.settings.defaultWastageCharge;
+      renderMonthlyPower();
+    }
+    function setActiveTab(which) {
+      const setting = which === 'settings';
+      $('estimatePanel').classList.toggle('hidden', setting);
+      $('settingsPanel').classList.toggle('visible', setting);
+      $('estimateTab').classList.toggle('active', !setting);
+      $('settingsTab').classList.toggle('active', setting);
+      if (setting) renderPriceTable();
+    }
+    function syncSettingsInput(id, key) {
+      $(id).addEventListener('input', () => {
+        state.settings[key] = Math.max(0, Number($(id).value) || 0);
+        if (key === 'defaultDesignCharge') $('designCharge').value = state.settings[key];
+        if (key === 'defaultLabourCharge') $('labourCharge').value = state.settings[key];
+        if (key === 'defaultWastageCharge') $('wastageCharge').value = state.settings[key];
+        saveState(); calculate();
+      });
+    }
+
+    $('addComponentBtn').addEventListener('click', () => addComponent());
+    ['productName','productQuantity','machineMinutes','designCharge','labourCharge','wastageCharge'].forEach(id => $(id).addEventListener('input', calculate));
+    $('laserPower').addEventListener('change', calculate);
+    $('gstRate').addEventListener('change', calculate);
+    $('estimateTab').addEventListener('click', () => setActiveTab('estimate'));
+    $('settingsTab').addEventListener('click', () => setActiveTab('settings'));
+    $('priceSearch').addEventListener('input', renderPriceTable);
+    $('printBtn').addEventListener('click', () => window.print());
+    $('clearBtn').addEventListener('click', () => {
+      $('productName').value = ''; $('productQuantity').value = 1; $('machineMinutes').value = 0;
+      $('designCharge').value = state.settings.defaultDesignCharge; $('labourCharge').value = state.settings.defaultLabourCharge; $('wastageCharge').value = state.settings.defaultWastageCharge;
+      $('gstRate').value = '0'; $('componentRows').innerHTML = ''; componentCounter = 0; addComponent();
+      calculate(); toast('Estimate form reset');
+    });
+
+    syncSettingsInput('monthlyHours','monthlyHours');
+    syncSettingsInput('monthlyBill','monthlyBill');
+    syncSettingsInput('defaultDesignCharge','defaultDesignCharge');
+    syncSettingsInput('defaultLabourCharge','defaultLabourCharge');
+    syncSettingsInput('defaultWastageCharge','defaultWastageCharge');
+
+    $('resetDefaultsBtn').addEventListener('click', () => {
+      if (!confirm('Restore all starter material rates and machine settings? Your edited prices will be replaced.')) return;
+      state = { materials: clone(DEFAULT_MATERIALS), settings: defaultSettings() };
+      saveState(); refreshComponentOptions(); writeSettingsInputs(); renderLaserPowerOptions(); renderLaserPowerRates(); renderPriceTable(); calculate(); toast('Starter values restored');
+    });
+    $('exportBtn').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob); const a = document.createElement('a');
+      a.href = url; a.download = 'sarts-price-estimator-backup.json'; a.click(); URL.revokeObjectURL(url);
+      toast('Backup exported');
+    });
+    $('importBtn').addEventListener('click', () => $('importFile').click());
+    $('importFile').addEventListener('change', async e => {
+      const file = e.target.files && e.target.files[0]; if (!file) return;
+      try {
+        const parsed = JSON.parse(await file.text());
+        if (!parsed || !Array.isArray(parsed.materials) || !parsed.settings) throw new Error('Not a SArts backup file');
+        const map = new Map(parsed.materials.map(m => [m.id, m]));
+        state.materials = DEFAULT_MATERIALS.map(def => ({...def, ...(map.get(def.id) || {})}));
+        state.settings = {...defaultSettings(), ...parsed.settings};
+        state.settings.laserPowerRates = normalizeLaserPowerRates(parsed.settings.laserPowerRates);
+        saveState(); refreshComponentOptions(); writeSettingsInputs(); renderLaserPowerOptions(); renderLaserPowerRates(); renderPriceTable(); calculate(); toast('Backup imported');
+      } catch (err) { alert('Could not import that file. Please choose a backup exported by this app.'); }
+      e.target.value = '';
+    });
+
+    writeSettingsInputs();
+    renderLaserPowerOptions();
+    renderLaserPowerRates();
+    renderPriceTable();
+    addComponent();
+    calculate();
+  </script>
+</body>
+</html>
